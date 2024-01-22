@@ -1,0 +1,21 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: aliceblue;
+  height: 100%;
+}
+
+.body {
+  max-width: 300px;
+  width: 100%;
+  text-align: center;
+}
+
+.loginButton {
+  width: 100%;
+}
+mat-form-field {
+  width: 100%;
+}
+
