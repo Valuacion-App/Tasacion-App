@@ -2,7 +2,7 @@ export const navbarData = [
   {
     routeLink: 'dashboard',
     icon: 'fal fa-home',
-    label: 'dashboard'
+    label: 'Inicio'
   },
   {
     routeLink: 'ubications',
@@ -10,7 +10,7 @@ export const navbarData = [
     label: 'ubicaciones'
   },
   {
-    routeLink: 'articles',
+    routeLink: 'tasation',
     icon: 'fal fa-file',
     label: 'articulos sin vida util'
   }

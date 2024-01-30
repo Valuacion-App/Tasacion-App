@@ -36,7 +36,6 @@ export class LoginComponent {
   login() {
     const email = this.user.get('email')!.value
     const password = this.user.get('password')!.value
-    console.log(email+ ' ' + password);
 
     // Validamos que el usuario ingrese datos
     if(!email || !password) {

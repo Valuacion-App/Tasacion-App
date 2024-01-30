@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { SideNavToggle } from './interfaces/sidenav.interface';
 import { BodyComponent } from "./components/body/body.component";
@@ -10,7 +9,7 @@ import { BodyComponent } from "./components/body/body.component";
     standalone: true,
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
-    imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, NavbarComponent, SidenavComponent, BodyComponent]
+    imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, SidenavComponent, BodyComponent]
 })
 export class AppComponent {
   title = 'tasacion-app';
