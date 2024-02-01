@@ -14,7 +14,8 @@ import {MatSelectModule} from '@angular/material/select';
 import { EmpFilter } from '../../interfaces/filter.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { EditAppraisalModalComponent } from '../edit-appraisal-modal/edit-appraisal-modal.component';
-
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 const ELEMENT_DATA: appraisalArticle[] = [
   {
     _id : "659d5924e45484d04d8fff45",
@@ -228,26 +229,6 @@ const ELEMENT_DATA: appraisalArticle[] = [
 }
 
 ];
-const ubications: ubication[] = [
-  {
-    _id: '123546',
-    code : 'TAS',
-    name : 'CEMPA',
-    detail : 'NINGUNO'
-  },
-  {
-    _id: '123546',
-    code : 'TAS',
-    name : 'CORREOS',
-    detail : 'NINGUNO'
-  },
-  {
-    _id: '123546',
-    code : 'TAS',
-    name : 'LABORATORIO',
-    detail : 'NINGUNO'
-  }
-]
 
 const columns = [
   { columnName: 'Codigo de Tasacion', columnTag: 'appraisalCode' },
@@ -267,13 +248,16 @@ const columns = [
     MatPaginatorModule,
     MatButtonModule,
     MatMenuModule,
-    MatSelectModule],
+    MatSelectModule,
+    FormsModule, MatFormFieldModule,
+    CommonModule],
   templateUrl: './appraisal.component.html',
   styleUrl: './appraisal.component.css'
 })
 
 export class AppraisalComponent implements AfterViewInit, OnInit {
-  ubicationData: ubication[] = ubications
+  ubicationData: ubication[] = []
+  selectedUbicationId: string;
   displayColumns: any[] = columns;
   displayedColumns: string[] = [
     'appraisalCode',
@@ -299,14 +283,14 @@ export class AppraisalComponent implements AfterViewInit, OnInit {
     });
   }
   ngOnInit() {
-    this.getAllAppraisals()
+    this.getAllUbications()
+    //this.getAllAppraisals()
 
   }
 
   ngAfterViewInit() {
     this.paginator._intl.itemsPerPageLabel = 'Articulos por pagina';
   }
-
   getAllAppraisals() {
     this._appraisalArticleService.getAllAppraisals().subscribe((data: appraisalArticle[]) => {
       console.log(data);
@@ -320,7 +304,15 @@ export class AppraisalComponent implements AfterViewInit, OnInit {
 
     })
   }
+  getAllAppraisalsByUbication(ubicationId: string) {
 
+    this._appraisalArticleService.getAllAppraisalsByUbication(ubicationId).subscribe((data: appraisalArticle[]) => {
+      console.log(data);
+
+      this.dataTasation = new MatTableDataSource(data)
+      this.dataTasation.paginator = this.paginator
+    })
+  }
 
   showElement(element: any) {
     console.log(element);

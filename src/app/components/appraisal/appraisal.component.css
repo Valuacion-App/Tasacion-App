@@ -10,3 +10,14 @@ table {
 td, th {
   width: 25%;
 }
+
+.filter-row {
+  display: flex;
+  max-width: 600px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.filterUbication {
+  max-width: 200px;
+}

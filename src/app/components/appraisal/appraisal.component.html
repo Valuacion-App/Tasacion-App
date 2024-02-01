@@ -1,14 +1,15 @@
 
-
-<mat-form-field>
-  <mat-label>Elije la ubicacion</mat-label>
-  <mat-select>
-    @for (ubicaction of ubicationData; track ubicaction) {
-      <mat-option [value]="ubicaction._id">{{ubicaction.name}}</mat-option>
-    }
-  </mat-select>
-</mat-form-field>
-
+<div class="filter-row">
+  <mat-form-field class="filterUbication">
+    <mat-label>Elije la ubicacion</mat-label>
+    <mat-select [(ngModel)]="selectedUbicationId">
+      @for (ubicaction of ubicationData; track ubicaction) {
+        <mat-option [value]="ubicaction._id">{{ubicaction.name}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="getAllAppraisalsByUbication(selectedUbicationId)">Buscar ambiente</button>
+</div>
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataTasation" >
     <ng-container matColumnDef="appraisalCode">
