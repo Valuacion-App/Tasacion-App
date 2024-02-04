@@ -9,29 +9,23 @@ import { HttpParams } from '@angular/common/http';
 })
 export class AppraisalArticleService {
   private myAppUrl: string;
-  private data: appraisalArticle[] = []
-  private isLoading: BehaviorSubject<Boolean>
-
+  private appraisalArticleData = new BehaviorSubject<appraisalArticle[]>([])
+  appraisalData$ = this.appraisalArticleData.asObservable()
   constructor(private http: HttpClient) {
     this.myAppUrl = environment.TasationRoute
-    //this.data = new BehaviorSubject<appraisalArticle[]>([])
   }
 
-  getAllAppraisals(): Observable<appraisalArticle[]> {
-    //this.isLoading = true
-    //this.data = this.http.get<appraisalArticle[]>(`${this.myAppUrl}/appraisalArticles`)
-    //this.isLoading = false
-    return this.http.get<any>(`${this.myAppUrl}/appraisalArticles`)
+  getAllAppraisals() {
+    this.http.get<any>(`${this.myAppUrl}/appraisalArticles`).subscribe((data: appraisalArticle[]) => {
+      this.appraisalArticleData.next(data)
+    })
   }
 
-  getAllAppraisalsByUbication(ubicationId: string): Observable<appraisalArticle[]> {
-    //this.isLoading = true
-    //this.data = this.http.get<appraisalArticle[]>(`${this.myAppUrl}/appraisalArticles`)
-    //this.isLoading = false
-    console.log(ubicationId);
-
+  getAllAppraisalsByUbication(ubicationId: string) {
     const options = ubicationId ?
-   { params: new HttpParams().set('ubicationId', ubicationId) } : {};
-    return this.http.get<any>(`${this.myAppUrl}/appraisalArticles/search`, options)
+    { params: new HttpParams().set('ubicationId', ubicationId) } : {};
+    this.http.get<any>(`${this.myAppUrl}/appraisalArticles/search`, options).subscribe((data: appraisalArticle[]) => {
+      this.appraisalArticleData.next(data)
+    })
   }
 }

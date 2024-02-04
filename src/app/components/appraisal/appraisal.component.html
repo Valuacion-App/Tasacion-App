@@ -10,7 +10,10 @@
   </mat-form-field>
   <button mat-raised-button color="primary" (click)="getAllAppraisalsByUbication(selectedUbicationId)">Buscar ambiente</button>
 </div>
-<div class="mat-elevation-z8">
+
+@if (dataTasation.filteredData.length > 0) {
+<div class="mat-elevation-z8" >
+
   <table mat-table [dataSource]="dataTasation" >
     <ng-container matColumnDef="appraisalCode">
       <th mat-header-cell *matHeaderCellDef> Codigo de Tasacion </th>
@@ -50,5 +53,7 @@
     <tr mat-row *matRowDef="let row; columns: columnsToDisplayWithExpand;"></tr>
 
   </table>
-  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of appraisal"></mat-paginator>
+
 </div>
+}

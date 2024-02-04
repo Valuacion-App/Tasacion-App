@@ -6,10 +6,11 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideToastr } from 'ngx-toastr';
 import { addTokenInterceptor } from './utils/add-token.interceptor';
+import { loaderInterceptor } from './utils/loader.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes),
-    provideHttpClient(withInterceptors([addTokenInterceptor])),
+    provideHttpClient(withInterceptors([addTokenInterceptor, loaderInterceptor])),
     provideAnimations(),
     provideToastr({
       timeOut: 7000,
