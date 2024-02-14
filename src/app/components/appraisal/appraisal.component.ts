@@ -1,5 +1,5 @@
 import { AppraisalArticleService } from './../../services/appraisal-article.service';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { appraisalArticle } from '../../interfaces/appraisal.interface';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
@@ -11,18 +11,20 @@ import {MatMenuModule} from '@angular/material/menu';
 import { UbicationService } from '../../services/ubication.service';
 import { ubication } from '../../interfaces/ubication.interface';
 import {MatSelectModule} from '@angular/material/select';
-import { EmpFilter } from '../../interfaces/filter.interface';
+import {AsyncPipe} from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { EditAppraisalModalComponent } from '../edit-appraisal-modal/edit-appraisal-modal.component';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { Observable, Subscription, map, startWith } from 'rxjs';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { SelectionModel } from '@angular/cdk/collections';
+import { PdfModalComponent } from '../pdf-modal/pdf-modal.component';
 const columns = [
   { columnName: 'Codigo de Tasacion', columnTag: 'appraisalCode' },
   { columnName: 'Viñeta', columnTag: 'bullet' },
   { columnName: 'Ubicacion', columnTag: 'ubication' },
-  //{ columnName: 'Articulo', columnTag: 'article.name' },
-  //{ columnName: 'Sub Grupo', columnTag: 'subGroup.name' },
 ];
 @Component({
   selector: 'app-appraisal',
@@ -37,16 +39,21 @@ const columns = [
     MatMenuModule,
     MatSelectModule,
     FormsModule, MatFormFieldModule,
-    CommonModule],
+    ReactiveFormsModule,
+    CommonModule,
+    MatAutocompleteModule,
+    AsyncPipe,
+    MatCheckboxModule],
   templateUrl: './appraisal.component.html',
   styleUrl: './appraisal.component.css'
 })
 
-export class AppraisalComponent implements AfterViewInit, OnInit {
+export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
   ubicationData: ubication[] = []
-  selectedUbicationId: string = "";
+  selectedUbication = new FormControl();
   displayColumns: any[] = columns;
   displayedColumns: string[] = [
+    'select',
     'appraisalCode',
     'bullet',
     'ubication',
@@ -54,18 +61,47 @@ export class AppraisalComponent implements AfterViewInit, OnInit {
   columnsToDisplayWithExpand = [...this.displayedColumns, 'actions']
   columnsToDisplay: any[] = this.displayedColumns.slice();
   dataTasation: MatTableDataSource<appraisalArticle>;
-
-  @ViewChild(MatPaginator, {static: false})
-  set paginator(value: MatPaginator) {
-    console.log(value);
-
-    this.dataTasation.paginator = value;
-  }
+  subscription: Subscription
+  filteredOptions: Observable<ubication[]>;
+  AppraisalSelected = new SelectionModel<appraisalArticle>(true, []);
+  @ViewChild(MatPaginator, {static: false}) paginator : MatPaginator
+  //  @ViewChild(MatPaginator, {static: false})
+  //  set paginator (value: MatPaginator) {
+  //    this.dataTasation.paginator = value;
+  //  }
 
   constructor(
     private _ubicationService: UbicationService,
     public dialog: MatDialog,
     public _appraisalArticleService: AppraisalArticleService) {
+      this.getAllUbications()
+  }
+
+  ngOnInit() {
+
+    this.filteredOptions = this.selectedUbication.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || '')),
+    );
+    this.subscription = this._appraisalArticleService.appraisalData$.subscribe((data: appraisalArticle[]) => {
+      this.dataTasation = new MatTableDataSource(data)
+      this.dataTasation.paginator = this.paginator;
+    })
+
+  }
+
+  ngOnDestroy() {
+    this._appraisalArticleService.deleteAppraisalsData()
+    this.subscription.unsubscribe()
+  }
+  ngAfterViewInit() {
+
+    this.paginator!._intl.itemsPerPageLabel = 'Articulos por pagina';
+  }
+  getAllUbications() {
+    this._ubicationService.getAllUbications().subscribe((data: ubication[]) => {
+      this.ubicationData = data
+    })
 
   }
 
@@ -74,36 +110,45 @@ export class AppraisalComponent implements AfterViewInit, OnInit {
       data: appraisalData
     });
   }
-  ngOnInit() {
-    console.log(this._appraisalArticleService.appraisalData$);
-
-    this._appraisalArticleService.appraisalData$.subscribe((data: appraisalArticle[]) => {
-      this.dataTasation = new MatTableDataSource(data)
-    })
-    this.getAllUbications()
+  openPdfModal() {
+    this.dialog.open(PdfModalComponent, {
+      data: {appraisals: this.AppraisalSelected.selected, ubication: this.selectedUbication.value}
+    });
   }
-
-  ngAfterViewInit() {
-
-    this.paginator._intl.itemsPerPageLabel = 'Articulos por pagina';
-
+  ischeckboxFullLength() {
+    let pageIndex: number
+    const numSelected = this.AppraisalSelected.selected.length;
+    pageIndex = this.dataTasation.paginator?.pageIndex! * this.dataTasation.paginator?.pageSize!
+    return numSelected === 30 || this.dataTasation.data.at(-1)?._id === this.AppraisalSelected.selected.at(-1)?._id;
   }
-  getAllUbications() {
-    this._ubicationService.getAllUbications().subscribe((data: ubication[]) => {
-      this.ubicationData = data
-
-    })
-
+  masterToggle() {
+    this.ischeckboxFullLength() ?
+        this.AppraisalSelected.clear() : this.toggleSelection();
   }
-  getAllAppraisalsByUbication(ubicationId: string) {
+  toggleSelection() {
+    let pageIndex: number
+    let lastIndex: number
+    pageIndex = this.dataTasation.paginator?.pageIndex! * this.dataTasation.paginator?.pageSize!
+    if ((pageIndex + 30) > this.dataTasation.data.length) {
+      lastIndex = (this.dataTasation.data.length)
+    } else {
+      lastIndex = pageIndex + 30
+    }
+    for (let index = pageIndex; index < lastIndex; index++) {
+      this.AppraisalSelected.select(this.dataTasation.data[index])
+    }
+  }
+  private _filter(filter: string): ubication[] {
+    const filterValue = filter.toLocaleLowerCase();
 
-    this._appraisalArticleService.getAllAppraisalsByUbication(ubicationId)
-    /*this._appraisalArticleService.getAllAppraisalsByUbication(ubicationId).subscribe((data: appraisalArticle[]) => {
-      console.log(data);
+    return this.ubicationData.filter(ubicationData => ubicationData.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase().includes(filterValue) ||
+    ubicationData.code.toLocaleLowerCase().toLocaleLowerCase().includes(filterValue));
+  }
+  getAllAppraisalsByUbication(selectedUbication: FormControl) {
 
-      this.dataTasation = new MatTableDataSource(data)
-      this.dataTasation.paginator = this.paginator
-    })*/
+    const ubicationSelected = this.ubicationData.filter(ubicationData => ubicationData.name.includes(selectedUbication.value))
+    this._appraisalArticleService.getAllAppraisalsByUbication(ubicationSelected[0]._id)
+
   }
 
 }
