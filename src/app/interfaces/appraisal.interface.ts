@@ -1,6 +1,7 @@
 import { article } from "./article.interface"
 import { subGroup } from "./subgroup.interface"
 import { state } from "./state.interface"
+import { ubication } from "./ubication.interface"
 
 export interface appraisalArticle {
     _id: string,
@@ -8,7 +9,7 @@ export interface appraisalArticle {
     code: string,
     bullet : string,
     date : Date,
-    ubication : string,
+    ubication : ubication,
     article : article,
     subGroup : subGroup,
     detail : string,
