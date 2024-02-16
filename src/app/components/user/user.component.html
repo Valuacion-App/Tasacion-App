@@ -1,0 +1,29 @@
+<p>Lista de usuarios</p>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="email">
+    <th mat-header-cell *matHeaderCellDef> Correo electronico</th>
+    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="nombre completo">
+    <th mat-header-cell *matHeaderCellDef> Nombre completo </th>
+    <td mat-cell *matCellDef="let element"> {{element.fullname}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="roles">
+    <th mat-header-cell *matHeaderCellDef> Roles </th>
+    <td mat-cell *matCellDef="let element"> {{element.roles}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  <!-- Row shown when there is no matching data. -->
+  <tr class="mat-row" *matNoDataRow>
+    <td class="mat-cell" colspan="4"></td>
+  </tr>
+</table>

@@ -1,0 +1,16 @@
+<div class="wrapper">
+  <form [formGroup]="user">
+    <div class="body">
+      <h1>Login</h1>
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre de usuario</mat-label>
+        <input matInput placeholder="Ingrese el nombre de usuario" formControlName="email">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Contraseña</mat-label>
+        <input matInput placeholder="Ingrese la contraseña" type="password" formControlName="password">
+      </mat-form-field>
+      <button class="loginButton" mat-raised-button color="primary" (click)="login()">Iniciar Sesion</button>
+    </div>
+  </form>
+</div>
