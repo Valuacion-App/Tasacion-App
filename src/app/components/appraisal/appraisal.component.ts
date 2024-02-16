@@ -49,6 +49,7 @@ const columns = [
 })
 
 export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
+  selectedCount: number = 0
   ubicationData: ubication[] = []
   selectedUbication = new FormControl();
   displayColumns: any[] = columns;
@@ -104,7 +105,6 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
     })
 
   }
-
   openDialog(appraisalData: appraisalArticle) {
     this.dialog.open(EditAppraisalModalComponent, {
       data: appraisalData
@@ -135,8 +135,11 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
       lastIndex = pageIndex + 30
     }
     for (let index = pageIndex; index < lastIndex; index++) {
-      this.AppraisalSelected.select(this.dataTasation.data[index])
+      if( this.AppraisalSelected.selected.length < 30) {
+        this.AppraisalSelected.select(this.dataTasation.data[index])
+      }
     }
+    this.selectedCount = this.AppraisalSelected.select.length
   }
   private _filter(filter: string): ubication[] {
     const filterValue = filter.toLocaleLowerCase();

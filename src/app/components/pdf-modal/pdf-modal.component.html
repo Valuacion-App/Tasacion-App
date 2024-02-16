@@ -1,6 +1,7 @@
 <div mat-dialog-content>
   <p mat-dialog-title>Ambiente: {{data.ubication}}</p>
 
+  <p mat-dialog-title>Articulos a Imprimir: </p>
   <div  class="mat-elevation-z8">
   <table mat-table [dataSource]="dataTasation" matSort>
 
@@ -28,6 +29,6 @@
 
 </div>
 <div mat-dialog-actions class="buttons">
-  <button mat-raised-button color="warn">Cancelar</button>
+  <button mat-raised-button color="warn" (click)="cancelAction()">Cancelar</button>
   <button mat-raised-button color="primary" (click)="createPdf()">Descargar Pdf</button>
 </div>

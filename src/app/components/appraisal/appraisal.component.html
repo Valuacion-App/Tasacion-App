@@ -13,9 +13,14 @@
   </form>
   <button mat-raised-button color="primary" (click)="getAllAppraisalsByUbication(selectedUbication)">Buscar
     ambiente</button>
-  <button mat-raised-button color="warn" (click)="openPdfModal()">Descargar Pdf</button>
-  <!-- [disabled]="AppraisalSelected.selected.length === 0" -->
+  <button mat-raised-button class="pdf-button" color="warn" (click)="openPdfModal()">Descargar Pdf</button>
+  <!-- [disabled]="AppraisalSelected.selected.length === 0"  -->
 </div>
+  @if (AppraisalSelected.selected.length > 0) {
+    <div style="color: grey;">Seleccionados: {{AppraisalSelected.selected.length }} / 30</div>
+  }
+
+
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataTasation" class="mat-table-responsive">
     <ng-container matColumnDef="select">
@@ -85,6 +90,6 @@
       </td>
     </tr>
   </table>
-  <mat-paginator [hidden]="!dataTasation.filteredData.length" [pageSizeOptions]="[5, 10, 25, 100]"
+  <mat-paginator [hidden]="!dataTasation.filteredData.length" [pageSizeOptions]="[30, 50, 100]"
     aria-label="Select page of appraisal"></mat-paginator>
 </div>

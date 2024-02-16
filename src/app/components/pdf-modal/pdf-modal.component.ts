@@ -6,7 +6,8 @@ import {
   MatDialog,
   MatDialogTitle,
   MatDialogContent,
-  MatDialogActions } from '@angular/material/dialog';
+  MatDialogActions,
+  MatDialogClose } from '@angular/material/dialog';
 import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { appraisalArticle } from '../../interfaces/appraisal.interface';
@@ -14,7 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 @Component({
   selector: 'app-pdf-modal',
   standalone: true,
-  imports: [MatTableModule,MatPaginatorModule, MatDialogContent, MatButtonModule, MatDialogActions, MatDialogTitle],
+  imports: [MatTableModule,MatPaginatorModule, MatDialogContent, MatButtonModule, MatDialogActions, MatDialogTitle, MatDialogClose],
   templateUrl: './pdf-modal.component.html',
   styleUrl: './pdf-modal.component.css'
 })
@@ -35,7 +36,9 @@ export class PdfModalComponent implements AfterViewInit {
   ngAfterViewInit() {
     this.dataTasation.paginator = this.paginator;
   }
-
+  cancelAction(): void {
+    this.dialogRef.close();
+  }
   createPdf() {
     this.pdfService.createPdf(this.data.appraisals).subscribe(res => {
       let blob = new Blob([res], { type: 'application/pdf' });

@@ -14,11 +14,14 @@ table {
 
 .filter-row {
   display: grid;
-  width: 100%;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-evenly;
   grid-auto-rows: 40px;
-  grid-template-columns: 200px 200px 200px;
+  grid-template-columns: 600px 200px 200px;
+}
+.pdf-button {
+  grid-column: 3;
+  grid-row: 1;
 }
 
 .filterUbication {
@@ -76,7 +79,7 @@ table {
 
   /*  Enable this to hide header
   .mat-table .mat-header-cell {
-    
+
     border: 10px solid;
     clip: rect(0 0 0 0);
     height: 1px;
@@ -117,7 +120,7 @@ table {
     float: left;
     text-transform: uppercase;
     font-weight: bold;
-    
+
     font-size: 0.85em;
   }
   .mat-table-responsive .mat-cell-responsive:last-child {
@@ -163,7 +166,7 @@ table {
 
   /*  Enable this to hide header
   .mat-table .mat-header-cell {
-    
+
     border: 10px solid;
     clip: rect(0 0 0 0);
     height: 1px;
