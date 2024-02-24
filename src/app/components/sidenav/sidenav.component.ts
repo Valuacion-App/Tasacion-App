@@ -3,6 +3,7 @@ import { navbarData } from './nav-data';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SideNavToggle } from '../../interfaces/sidenav.interface';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-sidenav',
   standalone: true,
@@ -15,7 +16,7 @@ export class SidenavComponent implements OnInit {
   collapsed = false;
   screenWidth = 0;
   navData = navbarData;
-
+  isLoggedIn$: Observable<boolean>;
   constructor(private router: Router) {
 
   }

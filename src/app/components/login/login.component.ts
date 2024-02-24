@@ -37,13 +37,11 @@ export class LoginComponent {
     const email = this.user.get('email')!.value
     const password = this.user.get('password')!.value
 
-    // Validamos que el usuario ingrese datos
     if(!email || !password) {
       this.toastr.error('Todos los campos son obligatorios', 'Error');
       return
     }
 
-    // Creamos el body
     const user: User = {
       email: email,
       password: password
@@ -54,7 +52,7 @@ export class LoginComponent {
       next: (token) => {
         localStorage.setItem('token', token);
         this.toastr.success('Inicio Sesion', 'Felicidades');
-        this.router.navigate(['/dashboard'])
+        this.router.navigate(['/user'])
       },
       error: (err: HttpErrorResponse) => {
         this.loading = false

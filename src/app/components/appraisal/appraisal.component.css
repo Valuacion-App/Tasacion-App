@@ -11,7 +11,21 @@ table {
 /* td, th {
   width: 25%;
 } */
+mat-header-cell {
+  justify-content: center;
+}
 
+.mat-column-select {
+
+  padding: 0;
+}
+.mat-column-codes {
+  width: 50%;
+}
+.mat-column-price {
+  justify-content: center;
+  width: 50%;
+}
 .filter-row {
   display: grid;
   align-items: center;

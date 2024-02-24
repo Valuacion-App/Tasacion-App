@@ -23,7 +23,7 @@ export class AppraisalArticleService {
   getAllAppraisalsByUbication(ubicationId: string) {
     const options = ubicationId ?
     { params: new HttpParams().set('ubicationId', ubicationId) } : {};
-    this.http.get<any>(`${this.myAppUrl}/appraisalArticles/search`, options).subscribe((data: appraisalArticle[]) => {
+    this.http.get<appraisalArticle[]>(`${this.myAppUrl}/appraisalArticles/search`, options).subscribe((data: appraisalArticle[]) => {
       this.appraisalArticleData.next(data)
     })
   }

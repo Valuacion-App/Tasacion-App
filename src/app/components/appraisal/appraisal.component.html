@@ -38,41 +38,52 @@
         </mat-checkbox>
       </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="appraisalCode">
-      <mat-header-cell *matHeaderCellDef> Código de Tasación </mat-header-cell>
+    <ng-container matColumnDef="codes">
+      <mat-header-cell *matHeaderCellDef> Códigos </mat-header-cell>
       <mat-cell *matCellDef="let element" data-label="Código de Tasación"
         class="mat-cell-responsive mat-cell-responsive-id">
-        {{element.appraisalCode}} </mat-cell>
+        Tasación: {{element.appraisalCode}} <br> codigo: {{element.code}} <br> Viñeta: {{element.bullet}}</mat-cell>
     </ng-container>
 
     <!-- Name Column -->
-    <ng-container matColumnDef="bullet">
-      <mat-header-cell *matHeaderCellDef> Viñeta </mat-header-cell>
-      <mat-cell *matCellDef="let element" data-label="Viñeta" class="mat-cell-responsive"> {{element.bullet}}
-      </mat-cell>
-    </ng-container>
-
-    <!-- Weight Column -->
     <ng-container matColumnDef="ubication">
       <mat-header-cell *matHeaderCellDef> Ubicación </mat-header-cell>
       <mat-cell *matCellDef="let element" data-label="Ubicación" class="mat-cell-responsive"> {{element.ubication.name}}
       </mat-cell>
     </ng-container>
+    <ng-container matColumnDef="article">
+      <mat-header-cell *matHeaderCellDef> Grupo </mat-header-cell>
+      <mat-cell *matCellDef="let element" data-label="Ubicación" class="mat-cell-responsive"> {{element.article.name}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="subGroup">
+      <mat-header-cell *matHeaderCellDef> Sub Grupo </mat-header-cell>
+      <mat-cell *matCellDef="let element" data-label="Ubicación" class="mat-cell-responsive"> {{element.subGroup.name}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="detail">
+      <mat-header-cell *matHeaderCellDef> Detalle </mat-header-cell>
+      <mat-cell *matCellDef="let element" data-label="Ubicación" class="mat-cell-responsive"> {{element.detail}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="state">
+      <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+      <mat-cell *matCellDef="let element" data-label="Ubicación" class="mat-cell-responsive"> {{element.state.name}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>
+      <mat-cell *matCellDef="let element" data-label="Ubicación" class="mat-cell-responsive"> {{element.Va}} Bs.
+      </mat-cell>
+    </ng-container>
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
       <mat-cell *matCellDef="let element" data-label="Acciones" class="mat-cell-responsive">
-        <mat-menu #appMenu="matMenu">
-          <ng-template matMenuContent>
-            <button mat-icon-button (click)="openDialog(element)">
-              <mat-icon>create</mat-icon>
-            </button>
-            <button mat-icon-button>
-              <mat-icon>delete</mat-icon>
-            </button>
-          </ng-template>
-        </mat-menu>
-        <button mat-icon-button [matMenuTriggerFor]="appMenu">
-          <mat-icon>more_vert</mat-icon>
+        <button mat-icon-button >
+          <mat-icon>create</mat-icon>
+        </button>
+        <button mat-icon-button>
+          <mat-icon>delete</mat-icon>
         </button>
       </mat-cell>
     </ng-container>
