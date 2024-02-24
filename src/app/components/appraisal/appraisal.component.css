@@ -11,7 +11,21 @@ table {
 /* td, th {
   width: 25%;
 } */
+mat-header-cell {
+  justify-content: center;
+}
 
+.mat-column-select {
+
+  padding: 0;
+}
+.mat-column-codes {
+  width: 50%;
+}
+.mat-column-price {
+  justify-content: center;
+  width: 50%;
+}
 .filter-row {
   display: grid;
   align-items: center;
@@ -59,7 +73,6 @@ table {
 .mat-row-responsive:nth-child(odd) {
   background-color: #f6f6f6;
 }
-
 
 @media screen and (max-width: 425px) {
   .filter-row {
@@ -152,9 +165,14 @@ table {
   .mat-cell-responsive:nth-child(2n + 3) {
     background: #f6f6f6;
   }
+
+  .light-effect {
+    /* Define your light effect CSS styles here */
+    box-shadow: 0 0 10px 2px rgba(3, 3, 3, 0.8);
+  }
 }
 
-@media screen and (max-width: 960px) and (min-width:426px) {
+@media screen and (max-width: 960px) and (min-width: 426px) {
   .mat-table-responsive {
     border: 0;
     vertical-align: middle;
@@ -186,6 +204,12 @@ table {
   }
   .mat-cell-responsive {
     padding: 2%;
+  }
+
+  .mat-cell-responsive-checkbox {
+    /* justify-content: center;
+    align-items: center; */
+    margin-top: -50px;
   }
 
   .mat-table-responsive .mat-cell-responsive {
@@ -237,5 +261,10 @@ table {
   }
   .mat-cell-responsive:nth-child(2n + 3) {
     background: #f6f6f6;
+  }
+
+  .light-effect {
+    /* Define your light effect CSS styles here */
+    box-shadow: 0 0 10px 2px rgba(3, 3, 3, 0.8);
   }
 }

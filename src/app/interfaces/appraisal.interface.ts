@@ -18,9 +18,14 @@ export interface appraisalArticle {
     vr : number,
     ant : number,
     vexp : number,
+    K1a : number,
+    Va : number,
+    replacementValue : number,
     state : state,
     urlImage1 : string,
     urlImage2 : string,
     createdAt : Date,
-    updatedAt : Date
+    updatedAt : Date,
+    isChecked : boolean,
+    isPC : boolean
 }

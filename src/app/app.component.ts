@@ -13,8 +13,6 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, SidenavComponent, BodyComponent, SpinnerComponent]
 })
 export class AppComponent {
-  title = 'tasacion-app';
-
   isSideNavCollapsed = false
   screenWidth = 0
 

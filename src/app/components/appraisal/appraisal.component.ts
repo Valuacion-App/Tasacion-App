@@ -21,11 +21,6 @@ import { Observable, Subscription, map, startWith } from 'rxjs';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
 import { PdfModalComponent } from '../pdf-modal/pdf-modal.component';
-const columns = [
-  { columnName: 'Codigo de Tasacion', columnTag: 'appraisalCode' },
-  { columnName: 'Viñeta', columnTag: 'bullet' },
-  { columnName: 'Ubicacion', columnTag: 'ubication' },
-];
 @Component({
   selector: 'app-appraisal',
   standalone: true,
@@ -52,12 +47,15 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
   selectedCount: number = 0
   ubicationData: ubication[] = []
   selectedUbication = new FormControl();
-  displayColumns: any[] = columns;
   displayedColumns: string[] = [
     'select',
-    'appraisalCode',
-    'bullet',
+    'codes',
     'ubication',
+    'article',
+    'subGroup',
+    'detail',
+    'state',
+    'price'
   ];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'actions']
   columnsToDisplay: any[] = this.displayedColumns.slice();
