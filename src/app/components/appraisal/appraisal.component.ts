@@ -84,6 +84,7 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
     );
     this.subscription = this._appraisalArticleService.appraisalData$.subscribe((data: appraisalArticle[]) => {
       this.dataTasation = new MatTableDataSource(data)
+
       this.dataTasation.paginator = this.paginator;
     })
 
@@ -99,14 +100,19 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
   }
   getAllUbications() {
     this._ubicationService.getAllUbications().subscribe((data: ubication[]) => {
+
       this.ubicationData = data
     })
 
   }
-  openDialog(appraisalData: appraisalArticle) {
-    this.dialog.open(EditAppraisalModalComponent, {
+  openEditModal(appraisalData: appraisalArticle) {
+    const editDialog = this.dialog.open(EditAppraisalModalComponent, {
       data: appraisalData
     });
+    editDialog.afterClosed().subscribe((res) => {
+      this.getAllAppraisalsByUbication(this.selectedUbication)
+    }
+    )
   }
   openPdfModal() {
     this.dialog.open(PdfModalComponent, {
@@ -141,12 +147,10 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
   }
   private _filter(filter: string): ubication[] {
     const filterValue = filter.toLocaleLowerCase();
-
-    return this.ubicationData.filter(ubicationData => ubicationData.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase().includes(filterValue) ||
-    ubicationData.code.toLocaleLowerCase().toLocaleLowerCase().includes(filterValue));
+    return this.ubicationData.filter(ubicationData => ubicationData.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase().includes(filterValue));
   }
   getAllAppraisalsByUbication(selectedUbication: FormControl) {
-
+    this.AppraisalSelected.clear()
     const ubicationSelected = this.ubicationData.filter(ubicationData => ubicationData.name.includes(selectedUbication.value))
     this._appraisalArticleService.getAllAppraisalsByUbication(ubicationSelected[0]._id)
 
