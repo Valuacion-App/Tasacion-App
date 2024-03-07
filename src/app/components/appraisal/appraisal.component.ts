@@ -138,8 +138,6 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
       maxWidth: '100%', // Ensure modal doesn't exceed viewport width
       maxHeight: '100%', // Ensure modal doesn't exceed viewport height
       panelClass: 'custom-modal-container', // Add custom class for styling */
-      maxWidth: '100%', // Ensure modal doesn't exceed viewport width
-      maxHeight: '100%', // Ensure modal doesn't exceed viewport height
       data: appraisalData
     });
   }
