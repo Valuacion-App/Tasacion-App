@@ -22,6 +22,11 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
 import { PdfModalComponent } from '../pdf-modal/pdf-modal.component';
 import { DetailAppraisalModalComponent } from '../detail-appraisal-modal/detail-appraisal-modal.component';
+const columns = [
+  { columnName: 'Codigo de Tasacion', columnTag: 'appraisalCode' },
+  { columnName: 'Viñeta', columnTag: 'bullet' },
+  { columnName: 'Ubicacion', columnTag: 'ubication' },
+];
 @Component({
   selector: 'app-appraisal',
   standalone: true,
@@ -48,15 +53,12 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
   selectedCount: number = 0
   ubicationData: ubication[] = []
   selectedUbication = new FormControl();
+  displayColumns: any[] = columns;
   displayedColumns: string[] = [
     'select',
-    'codes',
+    'appraisalCode',
+    'bullet',
     'ubication',
-    'article',
-    'subGroup',
-    'detail',
-    'state',
-    'price'
   ];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'actions']
   columnsToDisplay: any[] = this.displayedColumns.slice();
@@ -85,7 +87,6 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
     );
     this.subscription = this._appraisalArticleService.appraisalData$.subscribe((data: appraisalArticle[]) => {
       this.dataTasation = new MatTableDataSource(data)
-
       this.dataTasation.paginator = this.paginator;
     })
 
@@ -101,7 +102,6 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
   }
   getAllUbications() {
     this._ubicationService.getAllUbications().subscribe((data: ubication[]) => {
-
       this.ubicationData = data
     })
 
@@ -115,9 +115,9 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
     }
     )
   }
-  openDetail(appraisalData: appraisalArticle) {
-    this.dialog.open(DetailAppraisalModalComponent, {
-      /* width: '80vw', // Set your desired width here
+  openDialog(appraisalData: appraisalArticle) {
+    const editDialog = this.dialog.open(DetailAppraisalModalComponent, {
+    /* width: '80vw', // Set your desired width here
       height: '80vh', // Set your desired height here
       maxWidth: '100%', // Ensure modal doesn't exceed viewport width
       maxHeight: '100%', // Ensure modal doesn't exceed viewport height
