@@ -2,25 +2,26 @@ import { AppraisalArticleService } from './../../services/appraisal-article.serv
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { appraisalArticle } from '../../interfaces/appraisal.interface';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatTableDataSource, MatTableModule} from '@angular/material/table';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
-import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { UbicationService } from '../../services/ubication.service';
 import { ubication } from '../../interfaces/ubication.interface';
-import {MatSelectModule} from '@angular/material/select';
-import {AsyncPipe} from '@angular/common';
+import { MatSelectModule } from '@angular/material/select';
+import { AsyncPipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { EditAppraisalModalComponent } from '../edit-appraisal-modal/edit-appraisal-modal.component';
 import { CommonModule } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { Observable, Subscription, map, startWith } from 'rxjs';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
 import { PdfModalComponent } from '../pdf-modal/pdf-modal.component';
+import { DetailAppraisalModalComponent } from '../detail-appraisal-modal/detail-appraisal-modal.component';
 @Component({
   selector: 'app-appraisal',
   standalone: true,
@@ -63,7 +64,7 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
   subscription: Subscription
   filteredOptions: Observable<ubication[]>;
   AppraisalSelected = new SelectionModel<appraisalArticle>(true, []);
-  @ViewChild(MatPaginator, {static: false}) paginator : MatPaginator
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator
   //  @ViewChild(MatPaginator, {static: false})
   //  set paginator (value: MatPaginator) {
   //    this.dataTasation.paginator = value;
@@ -73,7 +74,7 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
     private _ubicationService: UbicationService,
     public dialog: MatDialog,
     public _appraisalArticleService: AppraisalArticleService) {
-      this.getAllUbications()
+    this.getAllUbications()
   }
 
   ngOnInit() {
@@ -114,9 +115,37 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
     }
     )
   }
+  openDetail(appraisalData: appraisalArticle) {
+    this.dialog.open(DetailAppraisalModalComponent, {
+      /* width: '80vw', // Set your desired width here
+      height: '80vh', // Set your desired height here
+      maxWidth: '100%', // Ensure modal doesn't exceed viewport width
+      maxHeight: '100%', // Ensure modal doesn't exceed viewport height
+      panelClass: 'custom-modal-container', // Add custom class for styling */
+      maxWidth: '100%', // Ensure modal doesn't exceed viewport width
+      maxHeight: '100%', // Ensure modal doesn't exceed viewport height
+      data: appraisalData
+    });
+    editDialog.afterClosed().subscribe((res) => {
+      this.getAllAppraisalsByUbication(this.selectedUbication)
+    }
+    )
+  }
+  openDetail(appraisalData: appraisalArticle) {
+    this.dialog.open(DetailAppraisalModalComponent, {
+      /* width: '80vw', // Set your desired width here
+      height: '80vh', // Set your desired height here
+      maxWidth: '100%', // Ensure modal doesn't exceed viewport width
+      maxHeight: '100%', // Ensure modal doesn't exceed viewport height
+      panelClass: 'custom-modal-container', // Add custom class for styling */
+      maxWidth: '100%', // Ensure modal doesn't exceed viewport width
+      maxHeight: '100%', // Ensure modal doesn't exceed viewport height
+      data: appraisalData
+    });
+  }
   openPdfModal() {
     this.dialog.open(PdfModalComponent, {
-      data: {appraisals: this.AppraisalSelected.selected, ubication: this.selectedUbication.value}
+      data: { appraisals: this.AppraisalSelected.selected, ubication: this.selectedUbication.value }
     });
   }
   ischeckboxFullLength() {
@@ -127,7 +156,7 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
   }
   masterToggle() {
     this.ischeckboxFullLength() ?
-        this.AppraisalSelected.clear() : this.toggleSelection();
+      this.AppraisalSelected.clear() : this.toggleSelection();
   }
   toggleSelection() {
     let pageIndex: number
@@ -139,7 +168,7 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
       lastIndex = pageIndex + 30
     }
     for (let index = pageIndex; index < lastIndex; index++) {
-      if( this.AppraisalSelected.selected.length < 30) {
+      if (this.AppraisalSelected.selected.length < 30) {
         this.AppraisalSelected.select(this.dataTasation.data[index])
       }
     }
@@ -147,7 +176,9 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
   }
   private _filter(filter: string): ubication[] {
     const filterValue = filter.toLocaleLowerCase();
-    return this.ubicationData.filter(ubicationData => ubicationData.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase().includes(filterValue));
+
+    return this.ubicationData.filter(ubicationData => ubicationData.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase().includes(filterValue) ||
+      ubicationData.code.toLocaleLowerCase().toLocaleLowerCase().includes(filterValue));
   }
   getAllAppraisalsByUbication(selectedUbication: FormControl) {
     this.AppraisalSelected.clear()

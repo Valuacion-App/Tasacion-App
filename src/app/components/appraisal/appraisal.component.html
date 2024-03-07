@@ -13,11 +13,12 @@
   </form>
   <button mat-raised-button color="primary" (click)="getAllAppraisalsByUbication(selectedUbication)">Buscar
     ambiente</button>
-  <button mat-raised-button class="pdf-button" color="warn" (click)="openPdfModal()" [disabled]="AppraisalSelected.selected.length === 0">Descargar Pdf</button>
+  <button mat-raised-button class="pdf-button" color="warn" (click)="openPdfModal()">Descargar Pdf</button>
+  <!-- [disabled]="AppraisalSelected.selected.length === 0"  -->
 </div>
-  @if (AppraisalSelected.selected.length > 0) {
-    <div style="color: grey;">Seleccionados: {{AppraisalSelected.selected.length }} / 30</div>
-  }
+@if (AppraisalSelected.selected.length > 0) {
+<div style="color: grey;">Seleccionados: {{AppraisalSelected.selected.length }} / 30</div>
+}
 
 
 <div class="mat-elevation-z8">
@@ -37,14 +38,21 @@
         </mat-checkbox>
       </mat-cell>
     </ng-container>
-    <ng-container matColumnDef="codes">
-      <mat-header-cell *matHeaderCellDef> Códigos </mat-header-cell>
+    <ng-container matColumnDef="appraisalCode">
+      <mat-header-cell *matHeaderCellDef> Código de Tasación </mat-header-cell>
       <mat-cell *matCellDef="let element" data-label="Código de Tasación"
         class="mat-cell-responsive mat-cell-responsive-id">
-        Tasación: {{element.appraisalCode}} <br> codigo: {{element.code}} <br> Viñeta: {{element.bullet}}</mat-cell>
+        {{element.appraisalCode}} </mat-cell>
     </ng-container>
 
     <!-- Name Column -->
+    <ng-container matColumnDef="bullet">
+      <mat-header-cell *matHeaderCellDef> Viñeta </mat-header-cell>
+      <mat-cell *matCellDef="let element" data-label="Viñeta" class="mat-cell-responsive"> {{element.bullet}}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Weight Column -->
     <ng-container matColumnDef="ubication">
       <mat-header-cell *matHeaderCellDef> Ubicación </mat-header-cell>
       <mat-cell *matCellDef="let element" data-label="Ubicación" class="mat-cell-responsive"> {{element.ubication?.name}}
@@ -78,6 +86,9 @@
     <ng-container matColumnDef="actions">
       <mat-header-cell *matHeaderCellDef> Acciones </mat-header-cell>
       <mat-cell *matCellDef="let element" data-label="Acciones" class="mat-cell-responsive">
+        <button mat-icon-button (click)="openDetail(element)">
+          <mat-icon>remove_red_eye</mat-icon>
+        </button>
         <button mat-icon-button (click)="openEditModal(element)">
           <mat-icon>create</mat-icon>
         </button>
