@@ -47,7 +47,7 @@
     <!-- Name Column -->
     <ng-container matColumnDef="ubication">
       <mat-header-cell *matHeaderCellDef> Ubicación </mat-header-cell>
-      <mat-cell *matCellDef="let element" data-label="Ubicación" class="mat-cell-responsive"> {{element.ubication.name}}
+      <mat-cell *matCellDef="let element" data-label="Ubicación" class="mat-cell-responsive"> {{element.ubication?.name}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="article">
@@ -57,7 +57,7 @@
     </ng-container>
     <ng-container matColumnDef="subGroup">
       <mat-header-cell *matHeaderCellDef> Sub Grupo </mat-header-cell>
-      <mat-cell *matCellDef="let element" data-label="Ubicación" class="mat-cell-responsive"> {{element.subGroup.name}}
+      <mat-cell *matCellDef="let element" data-label="Ubicación" class="mat-cell-responsive"> {{element.subGroup?.name}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="detail">
@@ -67,7 +67,7 @@
     </ng-container>
     <ng-container matColumnDef="state">
       <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
-      <mat-cell *matCellDef="let element" data-label="Ubicación" class="mat-cell-responsive"> {{element.state.name}}
+      <mat-cell *matCellDef="let element" data-label="Ubicación" class="mat-cell-responsive"> {{element.state?.name}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="price">

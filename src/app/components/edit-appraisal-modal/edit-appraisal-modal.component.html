@@ -48,7 +48,7 @@
         <mat-label>Estado</mat-label>
         <mat-select formControlName="state" name="state" (selectionChange)="changeK2()">
           @for (state of stateData; track state) {
-            <mat-option [value]="state._id">{{state.name}}</mat-option>
+            <mat-option [value]="state._id">{{state?.name}}</mat-option>
           }
         </mat-select>
       </mat-form-field>

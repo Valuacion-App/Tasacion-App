@@ -76,9 +76,9 @@ export class EditAppraisalModalComponent implements OnInit{
     private _subGroupService: SubGroupService,
     private _appraisalArticleService: AppraisalArticleService,
     private fb: FormBuilder) {
-    this.selectedUbication = new FormControl(data.ubication.name)
-    this.selectedArticle = new FormControl(data.article.name)
-    this.selectedSubGroup = new FormControl(data.subGroup.name)
+    this.selectedUbication = new FormControl(data.ubication?.name)
+    this.selectedArticle = new FormControl(data.article?.name)
+    this.selectedSubGroup = new FormControl(data.subGroup?.name)
     this.AppraisalArticleData = this.fb.group({
       appraisalCode: [data.appraisalCode, Validators.required],
       code: [data.code, Validators.required],
@@ -87,9 +87,9 @@ export class EditAppraisalModalComponent implements OnInit{
       detail: [data.detail, Validators.required],
       description: [data.description, Validators.required],
       ubication: [data.ubication._id, Validators.required],
-      article: [data.article._id, Validators.required],
-      state: [data.state._id, Validators.required],
-      subGroup: [data.subGroup._id, Validators.required],
+      article: [data.article?._id, Validators.required],
+      state: [data.state?._id, Validators.required],
+      subGroup: [data.subGroup?._id, Validators.required],
       vre: [data.vre, Validators.required],
       vr: [data.vr, Validators.required],
       ant: [data.ant, Validators.required],
