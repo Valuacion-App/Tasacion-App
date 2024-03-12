@@ -7,5 +7,5 @@ RUN npm run build
 
 # stage 2: Serve app with nginx server
 FROM nginx:latest
-COPY --from=build /app/dist/TASACION-APP /usr/share/nginx/html
+COPY --from=build /app/dist/Tasacion-App /usr/share/nginx/html
 EXPOSE 80
