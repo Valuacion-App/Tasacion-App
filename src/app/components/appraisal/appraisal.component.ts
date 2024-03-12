@@ -116,22 +116,6 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
     }
     )
   }
-  openDialog(appraisalData: appraisalArticle) {
-    const editDialog = this.dialog.open(DetailAppraisalModalComponent, {
-    /* width: '80vw', // Set your desired width here
-      height: '80vh', // Set your desired height here
-      maxWidth: '100%', // Ensure modal doesn't exceed viewport width
-      maxHeight: '100%', // Ensure modal doesn't exceed viewport height
-      panelClass: 'custom-modal-container', // Add custom class for styling */
-      maxWidth: '100%', // Ensure modal doesn't exceed viewport width
-      maxHeight: '100%', // Ensure modal doesn't exceed viewport height
-      data: appraisalData
-    });
-    editDialog.afterClosed().subscribe((res) => {
-      this.getAllAppraisalsByUbication(this.selectedUbication)
-    }
-    )
-  }
   openDetail(appraisalData: appraisalArticle) {
     this.dialog.open(DetailAppraisalModalComponent, {
       /* width: '80vw', // Set your desired width here
