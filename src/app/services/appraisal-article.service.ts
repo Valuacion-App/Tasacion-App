@@ -35,4 +35,9 @@ export class AppraisalArticleService {
 
     return this.http.put<any>(`${this.myAppUrl}/appraisalArticles/${appraisalId}`, appraisalArticle)
   }
+
+  deleteAppraisal(id: string): Observable<any> {
+
+    return this.http.delete<string>(`${this.myAppUrl}/appraisalArticles/${id}`)
+  }
 }

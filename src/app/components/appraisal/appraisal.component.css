@@ -11,7 +11,20 @@ table {
 /* td, th {
   width: 25%;
 } */
-
+mat-header-cell {
+  justify-content: center;
+}
+.mat-column-select{
+  /* flex: 0 0 5%; */
+  justify-content: left;
+}
+.mat-column-codes {
+  width: 50%;
+}
+.mat-column-price {
+  justify-content: center;
+  width: 50%;
+}
 .filter-row {
   display: grid;
   align-items: center;

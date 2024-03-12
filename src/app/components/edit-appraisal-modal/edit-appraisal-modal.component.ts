@@ -102,10 +102,7 @@ export class EditAppraisalModalComponent implements OnInit{
     })
   }
   ngOnInit(): void {
-    console.log(this.data);
-
     this.getAllDatas()
-
   }
   changeK2() {
     const state = this.AppraisalArticleData.get('state')?.value
@@ -133,9 +130,9 @@ export class EditAppraisalModalComponent implements OnInit{
     this.calcVa()
   }
   updateAppraisal() {
-    const ubicationId = this.filterSelectedData(this.ubicationData, this.selectedUbication)._id
-    const articleId = this.filterSelectedData(this.articleData, this.selectedArticle)._id
-    const subGroupId = this.filterSelectedData(this.subGroupData, this.selectedSubGroup)._id
+    const ubicationId = this.filterSelectedData(this.ubicationData, this.selectedUbication.value === "" ? this.data.ubication.name : this.selectedUbication.value)._id
+    const articleId = this.filterSelectedData(this.articleData, this.selectedArticle.value === "" ? this.data.article.name : this.selectedArticle.value)._id
+    const subGroupId = this.filterSelectedData(this.subGroupData, this.selectedSubGroup.value === "" ? this.data.subGroup.name : this.selectedSubGroup.value)._id
     this.AppraisalArticleData.get('ubication')?.setValue(ubicationId)
     this.AppraisalArticleData.get('article')?.setValue(articleId)
     this.AppraisalArticleData.get('subGroup')?.setValue(subGroupId)
@@ -151,10 +148,9 @@ export class EditAppraisalModalComponent implements OnInit{
     }
     })
 
-
   }
   filterSelectedData(data: any, selectedData: any) {
-    return data.find((data: any) => data.name.includes(selectedData.value))
+    return data.find((data: any) => data.name.includes(selectedData))
   }
   getAllDatas() {
     forkJoin(
@@ -170,7 +166,7 @@ export class EditAppraisalModalComponent implements OnInit{
   })
 
   }
-  onNoClick(): void {
+  cancelClick(): void {
     this.dialogRef.close();
   }
 }

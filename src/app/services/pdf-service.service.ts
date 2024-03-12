@@ -16,6 +16,6 @@ export class PdfService {
 
   createPdf(appraisals: appraisalArticle[]): Observable<any> {
 
-    return this.http.post(`${this.myAppUrl}/generate-pdf/three-pdf`, appraisals, { responseType:'blob'})
+    return this.http.post(`${this.myAppUrl}/generate-pdf`, appraisals, { responseType:'blob'})
   }
 }
