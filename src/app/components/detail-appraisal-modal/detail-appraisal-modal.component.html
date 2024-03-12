@@ -1,0 +1,106 @@
+<div>
+    <h3 class="title">DETALLE ARTÍCULO SIN VIDA ÚTIL</h3>
+    <div class="container">
+        <div class="information">
+            <div class="header">
+                <div>
+                    <b>Código de Tasación</b>
+                    <p>{{detailData.appraisalCode}}</p>
+                </div>
+                <div>
+                    <b>Código</b>
+                    <p>{{detailData.code}}</p>
+                </div>
+                <div>
+                    <b>Viñeta</b>
+                    <p>{{detailData.bullet}}</p>
+                </div>
+                <!-- <div>
+                    <b>Fecha</b>
+                    <p>{{detailData.createdAt}}</p>
+                </div> -->
+
+            </div>
+            <hr class="solid">
+            <div class="aboutArticle">
+                <div>
+                    <div>
+                        <b>Ubicación</b>
+                        <p>{{detailData.ubication?.name}}</p>
+                    </div>
+                    <div>
+                        <b>Grupo de Articulos</b>
+                        <p>{{detailData.article?.name}}</p>
+                    </div>
+                    <div>
+                        <b>Sub grupos</b>
+                        <p>{{detailData.subGroup?.name}}</p>
+                    </div>
+                </div>
+                <div>
+                    <div>
+                        <b>Detalle</b>
+                        <p>{{detailData.detail}}</p>
+                    </div>
+                    <b>Descripción</b>
+                    <p>{{detailData.description}}</p>
+                </div>
+
+            </div>
+            <hr class="solid">
+            <div class="footer">
+
+                <!--   <b>Valor de Reposición o de mercado</b> -->
+                <div>
+                    <div class="inputHorizontal">
+                        <b>Vre</b>
+                        <p>: {{detailData.vre}}</p>
+                    </div>
+                    <div class="inputHorizontal">
+                        <b>Vr</b>
+                        <p>: {{detailData.vr}}</p>
+                    </div>
+                    <div class="inputHorizontal">
+                        <b>Ant</b>
+                        <p>: {{detailData.ant}}</p>
+                    </div>
+                    <div class="inputHorizontal">
+                        <b>Vexp</b>
+                        <p>: {{detailData.vexp}}</p>
+                    </div>
+                </div>
+                <div>
+                    <div class="inputHorizontal">
+                        <b>Estado</b>
+                        <p>: {{detailData.state?.name}}</p>
+                    </div>
+
+
+                    <div class="inputHorizontal">
+                        <b>K1a</b>
+                        <p>: {{detailData.K1a}}</p>
+                    </div>
+
+                    @if(detailData.useFormule === true)
+                    {(<div class="inputHorizontal">
+                        <b>Va</b>
+                        <p>: {{detailData.Va}}</p>
+                    </div>)}
+                    @else if(detailData.useFormule === false) {
+                    <div class="inputHorizontal">
+                        <b>replacementValue</b>
+                        <p>: {{detailData.replacementValue}}</p>
+                    </div>
+                    }
+
+
+                </div>
+            </div>
+
+        </div>
+        <div class="imagesContainer">
+            <img src={{detailData.urlImage1}} alt="Photo of image 1" class="responsive-image">
+            <img src={{detailData.urlImage2}} alt="Photo of image 1" class="responsive-image">
+        </div>
+    </div>
+</div>
