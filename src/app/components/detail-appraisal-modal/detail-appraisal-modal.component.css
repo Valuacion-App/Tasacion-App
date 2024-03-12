@@ -1,5 +1,6 @@
 .responsive-image {
-  width: 400px;
+  min-width: 120px;
+  max-width: 350px;
   min-height: 120px;
   max-height: 500px;
   float: left;
@@ -83,10 +84,11 @@ hr.solid {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  gap: 5px;
 }
 
 .imagesContainer img {
-  margin-right: 10px; /* Add spacing between input fields */
+  margin-left: 10px; /* Add spacing between input fields */
 }
 
 @media screen and (max-width: 425px) {
@@ -100,6 +102,7 @@ hr.solid {
   .imagesContainer {
     display: flex;
     flex-direction: column;
+    gap: 5px;
   }
 
   .imagesContainer img {
@@ -108,7 +111,8 @@ hr.solid {
   }
 
   .responsive-image {
-    width: 400px;
+    min-width: 120px;
+    max-width: 350px;
     min-height: 120px;
     max-height: 500px;
     float: left;
@@ -126,6 +130,7 @@ hr.solid {
   .imagesContainer {
     display: flex;
     flex-direction: column;
+    gap: 5px;
   }
 
   .imagesContainer img {
@@ -134,7 +139,8 @@ hr.solid {
   }
 
   .responsive-image {
-    width: 400px;
+    min-width: 120px;
+    max-width: 350px;
     min-height: 120px;
     max-height: 500px;
     float: left;
