@@ -21,6 +21,7 @@ import { Observable, Subscription, map, startWith } from 'rxjs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
 import { PdfModalComponent } from '../pdf-modal/pdf-modal.component';
+import { DeleteAppraisalModalComponent } from '../delete-appraisal-modal/delete-appraisal-modal.component';
 import { DetailAppraisalModalComponent } from '../detail-appraisal-modal/detail-appraisal-modal.component';
 const columns = [
   { columnName: 'Codigo de Tasacion', columnTag: 'appraisalCode' },
@@ -115,22 +116,6 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
     }
     )
   }
-  openDialog(appraisalData: appraisalArticle) {
-    const editDialog = this.dialog.open(DetailAppraisalModalComponent, {
-    /* width: '80vw', // Set your desired width here
-      height: '80vh', // Set your desired height here
-      maxWidth: '100%', // Ensure modal doesn't exceed viewport width
-      maxHeight: '100%', // Ensure modal doesn't exceed viewport height
-      panelClass: 'custom-modal-container', // Add custom class for styling */
-      maxWidth: '100%', // Ensure modal doesn't exceed viewport width
-      maxHeight: '100%', // Ensure modal doesn't exceed viewport height
-      data: appraisalData
-    });
-    editDialog.afterClosed().subscribe((res) => {
-      this.getAllAppraisalsByUbication(this.selectedUbication)
-    }
-    )
-  }
   openDetail(appraisalData: appraisalArticle) {
     this.dialog.open(DetailAppraisalModalComponent, {
       /* width: '80vw', // Set your desired width here
@@ -140,6 +125,15 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
       panelClass: 'custom-modal-container', // Add custom class for styling */
       data: appraisalData
     });
+  }
+  openDeleteModal(appraisalData: appraisalArticle) {
+    const deleteDialog = this.dialog.open(DeleteAppraisalModalComponent, {
+      data: appraisalData
+    });
+    deleteDialog.afterClosed().subscribe((res) => {
+      this.getAllAppraisalsByUbication(this.selectedUbication)
+    }
+    )
   }
   openPdfModal() {
     this.dialog.open(PdfModalComponent, {

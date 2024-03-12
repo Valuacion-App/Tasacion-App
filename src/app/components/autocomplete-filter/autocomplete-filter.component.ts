@@ -21,7 +21,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
   styleUrl: './autocomplete-filter.component.css'
 })
 export class AutocompleteFilterComponent implements OnInit{
-  @Input() control = new FormControl('');
+  @Input() control = new FormControl();
   @Input() data: any[] = []
   @Input() Label: string
   @Input() placeholder: string
@@ -36,6 +36,7 @@ export class AutocompleteFilterComponent implements OnInit{
     );
   }
   private _filter(filter: string): any[] {
+
     const filterValue = filter.toLocaleLowerCase();
 
     return this.data.filter(data => data.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase().includes(filterValue));

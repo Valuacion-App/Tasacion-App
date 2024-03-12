@@ -13,8 +13,9 @@
   </form>
   <button mat-raised-button color="primary" (click)="getAllAppraisalsByUbication(selectedUbication)">Buscar
     ambiente</button>
-  <button mat-raised-button class="pdf-button" color="warn" (click)="openPdfModal()">Descargar Pdf</button>
-  <!-- [disabled]="AppraisalSelected.selected.length === 0"  -->
+  <button mat-raised-button class="pdf-button" color="warn" (click)="openPdfModal()" [disabled]="AppraisalSelected.selected.length === 0" >
+    Descargar Pdf
+  </button>
 </div>
 @if (AppraisalSelected.selected.length > 0) {
 <div style="color: grey;">Seleccionados: {{AppraisalSelected.selected.length }} / 30</div>
@@ -94,7 +95,7 @@
             <button mat-icon-button (click)="openEditModal(element)">
               <mat-icon>create</mat-icon>
             </button>
-            <button mat-icon-button>
+            <button mat-icon-button (click)="openDeleteModal(element)">
               <mat-icon>delete</mat-icon>
             </button>
           </ng-template>
