@@ -1,4 +1,4 @@
 export const environment = {
-  TasationRoute: 'http://localhost:5000/api/v1',
-  PdfRoute: 'http://localhost:3000/api/v1'
+  TasationRoute: 'https://tasacion-app-api.onrender.com/api/v1',
+  PdfRoute: 'https://valuacion-api.onrender.com/api/v1'
 }
