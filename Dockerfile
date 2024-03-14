@@ -1,8 +1,21 @@
-FROM node:20-alpine3.18
+# stage 1: Compile and Build angular codebase
+FROM node:latest as build
 WORKDIR /app
-COPY package*.json ./
-COPY decorate-angular-cli.js ./
-COPY dist ./dist
+RUN npm cache clean --force
+COPY . .
 RUN npm install
-EXPOSE 4200
-CMD ["node", "dist/tasacion-app/server/server.mjs" ]
+RUN npm run build
+
+# stage 2: Serve app with nginx server
+# use the latest version of the official nginx image as the base image
+FROM nginx:latest
+WORKDIR /usr/share/nginx/html
+COPY --from=build /app/dist/tasacion-app/browser /usr/share/nginx/html
+
+#exposing internal port
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
+
+# The above commands build the Angular app and then configure and build a 
+# Docker image for serving it using the nginx web server.
