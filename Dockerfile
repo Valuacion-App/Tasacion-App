@@ -7,5 +7,5 @@ RUN npm install
 RUN ng build --configuration=production
 
 FROM nginx
-COPY nginx/staging-default.conf /etc/nginx/conf.d/default.conf
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build ./usr/src/app/dist/browser /usr/share/nginx/html/
