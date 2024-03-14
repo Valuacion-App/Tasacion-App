@@ -10,6 +10,6 @@ RUN npm run build
 # nginx state for serving content
 FROM node:18-alpine
 WORKDIR /usr/app
-COPY --from=build /app/src/dist/tasacion-app/server ./
+COPY --from=build /app/src/dist/tasacion-app/browser ./
 CMD node server.mjs
 EXPOSE 4000
