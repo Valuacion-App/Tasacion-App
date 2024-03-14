@@ -8,10 +8,8 @@ RUN npm run build
 
 # stage 2: Serve app with nginx server
 # nginx state for serving content
-FROM nginx:latest
-# Set working directory to nginx asset directory
-WORKDIR /usr/share/nginx/html
-
-COPY --from=build /dist/tasacion-app/browser /usr/share/nginx/html
-
-EXPOSE 80
+FROM node:18-alpine
+WORKDIR /usr/app
+COPY --from=build /app/src/dist/PROJECT_NAME/server ./
+CMD node server.mjs
+EXPOSE 4000
