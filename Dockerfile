@@ -10,12 +10,10 @@ RUN npm run build
 # use the latest version of the official nginx image as the base image
 FROM nginx:latest
 WORKDIR /usr/share/nginx/html
-COPY --from=build /app/dist/tasacion-app/browser /usr/share/nginx/html
-
+COPY --from=build /ng-app/dist/tasacion-app/browser /usr/share/nginx/html
 #exposing internal port
 EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
 
 # The above commands build the Angular app and then configure and build a 
 # Docker image for serving it using the nginx web server.

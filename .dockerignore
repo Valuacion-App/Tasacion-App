@@ -10,6 +10,7 @@
 **/.aws
 **/dist
 
+node_modules
+dist
+.angular
 .git
-.gitignore
-/node_modules
