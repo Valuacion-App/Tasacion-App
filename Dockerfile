@@ -1,19 +1,13 @@
 # stage 1: Compile and Build angular codebase
 FROM node:latest as build
-ADD ./package.json /tmp/package.json
-RUN cd /tmp && npm install
-RUN mkdir -p /usr/local/app && cp -a /tmp/node_modules /usr/local/app/
-
-WORKDIR /usr/local/app
-
-# Add the source code from the app to the container
-COPY ./ /usr/local/app/
-
-# Generate the build of the application
+WORKDIR /app
+RUN npm cache clean --force
+COPY . .
+RUN npm install
 RUN npm run build
 
-# Stage 2: Serve app with nginx server
-# Use official nginx image as the base image
+# stage 2: Serve app with nginx server
+# nginx state for serving content
 FROM nginx:latest
 
 # Copy the build output to replace the default nginx contents.
