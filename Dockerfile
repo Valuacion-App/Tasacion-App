@@ -4,7 +4,7 @@ WORKDIR /app
 RUN npm cache clean --force
 COPY . .
 RUN npm install
-RUN ng build --configuration=production
+RUN ng build
 
 FROM nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
