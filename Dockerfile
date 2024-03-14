@@ -12,6 +12,6 @@ FROM nginx:latest
 # Set working directory to nginx asset directory
 WORKDIR /usr/share/nginx/html
 
-COPY --from=build /app/dist/tasacion-app/ /usr/share/nginx/html
+COPY --from=build /app/dist/tasacion-app/browser /usr/share/nginx/html
 
 EXPOSE 80
