@@ -1,15 +1,15 @@
 # stage 1: Compile and Build angular codebase
-FROM node:alpine
+FROM node:20-alpine as angular
+WORKDIR /ng-app
+COPY package*.json .
+RUN npm ci
+COPY . .
+RUN npm run build
 
-WORKDIR /usr/src/app
-
-COPY . /usr/src/app
-
-RUN npm install -g @angular/cli
-
-RUN npm install
-
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+FROM nginx:alpine
+ARG name
+COPY --from=angular /ng-app/dist/$name/browser /usr/share/nginx/html
+EXPOSE 80
 
 
 # The above commands build the Angular app and then configure and build a 
