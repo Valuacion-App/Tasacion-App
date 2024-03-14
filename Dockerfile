@@ -8,7 +8,7 @@ RUN npm run build
 
 FROM nginx:alpine
 ARG name
-COPY --from=angular /ng-app/dist/$name/browser /usr/share/nginx/html
+COPY --from=angular /app/dist/tasacion-app/browser /usr/share/nginx/html
 EXPOSE 80
 
 
