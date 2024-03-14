@@ -5,4 +5,4 @@ COPY decorate-angular-cli.js ./
 COPY dist ./dist
 RUN npm install
 EXPOSE 4200
-CMD ["node", "dist/myApp/server/server.mjs" ]
+CMD ["node", "dist/tasacion-app/server/server.mjs" ]
