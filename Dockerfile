@@ -1,12 +1,11 @@
 # stage 1: Compile and Build angular codebase
-FROM node:20-alpine as angular
-WORKDIR /ng-app
-COPY package*.json .
-RUN npm ci
+FROM node:latest as build
+WORKDIR /app
+RUN npm cache clean --force
 COPY . .
-RUN npm run build
+RUN npm install
+RUN ng build --configuration=production
 
-FROM nginx:alpine
-WORKDIR /usr/share/nginx/html
-COPY --from=angular /app/dist/tasacion-app/browser /usr/share/nginx/html
-EXPOSE 80
+FROM nginx
+COPY nginx/staging-default.conf /etc/nginx/conf.d/default.conf
+COPY --from=build ./usr/src/app/dist/fustany /usr/share/nginx/html/
