@@ -1,18 +1,15 @@
 # stage 1: Compile and Build angular codebase
-FROM node:latest as build
-WORKDIR /app
-RUN npm cache clean --force
-COPY . .
-RUN npm install
-RUN npm run build
+FROM node:alpine
 
-# stage 2: Serve app with nginx server
-# use the latest version of the official nginx image as the base image
-FROM nginx:latest
-WORKDIR /usr/share/nginx/html
-COPY --from=build /ng-app/dist/tasacion-app/browser /usr/share/nginx/html
-#exposing internal port
-EXPOSE 80
+WORKDIR /usr/src/app
+
+COPY . /usr/src/app
+
+RUN npm install -g @angular/cli
+
+RUN npm install
+
+CMD ["ng", "serve", "--host", "0.0.0.0"]
 
 
 # The above commands build the Angular app and then configure and build a 
