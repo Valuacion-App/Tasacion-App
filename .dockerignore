@@ -9,3 +9,7 @@
 **/.editorconfig
 **/.aws
 **/dist
+
+.git
+.gitignore
+/node_modules
