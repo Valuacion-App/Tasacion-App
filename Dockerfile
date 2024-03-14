@@ -1,13 +1,19 @@
 # stage 1: Compile and Build angular codebase
 FROM node:latest as build
 WORKDIR /app
-RUN npm cache clean --force
-COPY . .
-RUN npm install
-RUN npm run build
 
-# stage 2: Serve app with nginx server
-# nginx state for serving content
+# Copy package.json and package-lock.json to /app
+COPY package*.json ./
+
+# Install app dependencies
+RUN npm install
+
+# Copy app source code to /app
+COPY . .
+
+# Build the app for production
+RUN npm run build --prod
+
 # Expose port 80 for the container
 EXPOSE 80
 
