@@ -1,15 +1,8 @@
-# stage 1: Compile and Build angular codebase
-FROM node:latest as build
+FROM node:20-alpine3.18
 WORKDIR /app
-RUN npm cache clean --force
-COPY . .
+COPY package*.json ./
+COPY decorate-angular-cli.js ./
+COPY dist ./dist
 RUN npm install
-RUN npm run build
-
-# stage 2: Serve app with nginx server
-# nginx state for serving content
-FROM nginx:alpine
-WORKDIR /usr/share/nginx/html
-COPY dist/tasacion-app/browser /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE 4200
+CMD ["node", "dist/myApp/server/server.mjs" ]
