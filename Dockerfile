@@ -9,5 +9,5 @@ RUN npm run build
 # stage 2: Serve app with nginx server
 # nginx state for serving content
 FROM nginx:alpine
-COPY --from=builder /app/dist/tasacion-app/browser /usr/share/nginx/html
+COPY --from=build /app/dist/tasacion-app/browser /usr/share/nginx/html
 EXPOSE 80
