@@ -1,21 +1,32 @@
 # stage 1: Compile and Build angular codebase
 FROM node:latest as build
-WORKDIR /app
+ADD ./package.json /tmp/package.json
+RUN cd /tmp && npm install
+RUN mkdir -p /usr/local/app && cp -a /tmp/node_modules /usr/local/app/
 
-# Copy package.json and package-lock.json to /app
-COPY package*.json ./
+WORKDIR /usr/local/app
 
-# Install app dependencies
-RUN npm install
+# Add the source code from the app to the container
+COPY ./ /usr/local/app/
 
-# Copy app source code to /app
-COPY . .
+# Generate the build of the application
+RUN npm run build
 
-# Build the app for production
-RUN npm run build --prod
+# Stage 2: Serve app with nginx server
+# Use official nginx image as the base image
+FROM nginx:latest
 
-# Expose port 80 for the container
-EXPOSE 80
+# Copy the build output to replace the default nginx contents.
+COPY --from=build /usr/local/app/dist/build/browser /usr/share/nginx/html
 
-# Start the app
-CMD ["npm", "start"]
+# This line is IMPORTANT, we will breakdown it on a minute.
+COPY ./entrypoint.sh /usr/local/app/entrypoint.sh
+
+# Copy the nginx conf that we created to the container
+COPY ./nginx.conf  /etc/nginx/conf.d/default.conf
+
+# Expose ports
+EXPOSE 80 443 6006 4200
+
+RUN chmod +x /usr/local/app/entrypoint.sh
+ENTRYPOINT [ "/usr/local/app/entrypoint.sh" ]
