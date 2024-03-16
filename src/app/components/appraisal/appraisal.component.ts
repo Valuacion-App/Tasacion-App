@@ -55,11 +55,13 @@ const columns = [
 })
 
 export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
+  filterStateText: string = 'true'
   selectedCount: number = 0
   ubicationData: ubication[] = []
   subGroupData: subGroup[] = []
   selectedUbication = new FormControl('');
   selectedSubGroup = new FormControl('');
+  filterState: boolean = true;
   displayColumns: any[] = columns;
   displayedColumns: string[] = [
     'select',
@@ -124,12 +126,25 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
     })
   }
 
+  filterByState(filter: boolean) {
+    this.filterState = filter
+
+
+    if(filter) {
+      this.getAllAppraisalsByUbication()
+    } else {
+      console.log('entro');
+      this.filterStateText = 'false'
+      this.getAllAppraisalsByUbication()
+    }
+
+  }
   openEditModal(appraisalData: appraisalArticle) {
     const editDialog = this.dialog.open(EditAppraisalModalComponent, {
       data: appraisalData
     });
     editDialog.afterClosed().subscribe((res) => {
-      this.getAllAppraisalsByUbication(this.selectedUbication)
+      this.getAllAppraisalsByUbication()
     }
     )
   }
@@ -148,7 +163,7 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
       data: appraisalData
     });
     deleteDialog.afterClosed().subscribe((res) => {
-      this.getAllAppraisalsByUbication(this.selectedUbication)
+      this.getAllAppraisalsByUbication()
     }
     )
   }
@@ -189,13 +204,13 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
     return this.ubicationData.filter(ubicationData => ubicationData.name.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase().includes(filterValue) ||
       ubicationData.code.toLocaleLowerCase().toLocaleLowerCase().includes(filterValue));
   }
-  getAllAppraisalsByUbication(selectedUbication: FormControl) {
+  getAllAppraisalsByUbication() {
     this.AppraisalSelected.clear()
 
-    const ubicationSelected = selectedUbication.value != "" ? this.ubicationData.filter(ubicationData => ubicationData.name.includes(selectedUbication.value))[0]._id : ""
+    const ubicationSelected = this.selectedUbication.value != "" ? this.ubicationData.filter(ubicationData => ubicationData.name.includes(this.selectedUbication.value!))[0]._id : ""
     const subGroupSelected = this.selectedSubGroup.value != "" ? this.subGroupData.filter(subGroupData => subGroupData.name.includes(this.selectedSubGroup.value!))[0]._id : ""
 
-    this._appraisalArticleService.getAllAppraisalsByUbication(subGroupSelected, ubicationSelected)
+    this._appraisalArticleService.getAllAppraisalsQueryParams(subGroupSelected, ubicationSelected, this.filterStateText)
 
   }
 

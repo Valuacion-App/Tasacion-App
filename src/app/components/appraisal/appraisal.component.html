@@ -17,7 +17,12 @@
   [data] = "subGroupData"
   Label = "Sub Grupo"
   placeholder="Seleccione el sub grupo" class="inputDropdown"></app-autocomplete-filter>
-  <button mat-raised-button color="primary" (click)="getAllAppraisalsByUbication(selectedUbication)">Buscar
+  <mat-checkbox class="checkbox"
+  [checked]="filterState"
+  (change)="filterByState($event.checked)">
+  Filtrar articulos Basura y Descarte
+</mat-checkbox>
+  <button mat-raised-button color="primary" (click)="getAllAppraisalsByUbication()">Buscar
     ambiente</button>
   <button mat-raised-button class="pdf-button" color="warn" (click)="openPdfModal()" [disabled]="AppraisalSelected.selected.length === 0" >
     Descargar Pdf

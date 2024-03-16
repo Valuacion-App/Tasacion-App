@@ -36,6 +36,11 @@ mat-header-cell {
   grid-column: 3;
   grid-row: 1;
 }
+.checkbox {
+  align-self: center;
+  grid-column: 2;
+  grid-row: 2;
+}
 .inputDropdown {
   width: 100%;
   grid-column: 1;
