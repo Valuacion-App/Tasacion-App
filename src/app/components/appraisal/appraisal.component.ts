@@ -17,12 +17,15 @@ import { EditAppraisalModalComponent } from '../edit-appraisal-modal/edit-apprai
 import { CommonModule } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { Observable, Subscription, map, startWith } from 'rxjs';
+import { Observable, Subscription, concatMap, forkJoin, map, startWith, tap } from 'rxjs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
 import { PdfModalComponent } from '../pdf-modal/pdf-modal.component';
 import { DeleteAppraisalModalComponent } from '../delete-appraisal-modal/delete-appraisal-modal.component';
 import { DetailAppraisalModalComponent } from '../detail-appraisal-modal/detail-appraisal-modal.component';
+import { SubGroupService } from '../../services/sub-group.service';
+import { subGroup } from '../../interfaces/subgroup.interface';
+import { AutocompleteFilterComponent } from '../autocomplete-filter/autocomplete-filter.component';
 const columns = [
   { columnName: 'Codigo de Tasacion', columnTag: 'appraisalCode' },
   { columnName: 'Viñeta', columnTag: 'bullet' },
@@ -45,7 +48,8 @@ const columns = [
     CommonModule,
     MatAutocompleteModule,
     AsyncPipe,
-    MatCheckboxModule],
+    MatCheckboxModule,
+    AutocompleteFilterComponent],
   templateUrl: './appraisal.component.html',
   styleUrl: './appraisal.component.css'
 })
@@ -53,7 +57,9 @@ const columns = [
 export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
   selectedCount: number = 0
   ubicationData: ubication[] = []
-  selectedUbication = new FormControl();
+  subGroupData: subGroup[] = []
+  selectedUbication = new FormControl('');
+  selectedSubGroup = new FormControl('');
   displayColumns: any[] = columns;
   displayedColumns: string[] = [
     'select',
@@ -68,16 +74,13 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
   filteredOptions: Observable<ubication[]>;
   AppraisalSelected = new SelectionModel<appraisalArticle>(true, []);
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator
-  //  @ViewChild(MatPaginator, {static: false})
-  //  set paginator (value: MatPaginator) {
-  //    this.dataTasation.paginator = value;
-  //  }
 
   constructor(
     private _ubicationService: UbicationService,
     public dialog: MatDialog,
-    public _appraisalArticleService: AppraisalArticleService) {
-    this.getAllUbications()
+    public _appraisalArticleService: AppraisalArticleService,
+    private _subGroupService: SubGroupService) {
+    this.getAllDatas()
   }
 
   ngOnInit() {
@@ -105,8 +108,22 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
     this._ubicationService.getAllUbications().subscribe((data: ubication[]) => {
       this.ubicationData = data
     })
-
   }
+  getAllDatas() {
+    forkJoin(
+      this._ubicationService.getAllUbications(),
+      this._subGroupService.getAllSubGroups(),
+    ).subscribe(([ubications, subGroups]) => {
+      this.ubicationData = ubications;
+      this.subGroupData = subGroups;
+  })
+}
+  getAllSubgroups() {
+    this._subGroupService.getAllSubGroups().subscribe((data: subGroup[]) => {
+      this.subGroupData = data
+    })
+  }
+
   openEditModal(appraisalData: appraisalArticle) {
     const editDialog = this.dialog.open(EditAppraisalModalComponent, {
       data: appraisalData
@@ -174,8 +191,11 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
   }
   getAllAppraisalsByUbication(selectedUbication: FormControl) {
     this.AppraisalSelected.clear()
-    const ubicationSelected = this.ubicationData.filter(ubicationData => ubicationData.name.includes(selectedUbication.value))
-    this._appraisalArticleService.getAllAppraisalsByUbication(ubicationSelected[0]._id)
+
+    const ubicationSelected = selectedUbication.value != "" ? this.ubicationData.filter(ubicationData => ubicationData.name.includes(selectedUbication.value))[0]._id : ""
+    const subGroupSelected = this.selectedSubGroup.value != "" ? this.subGroupData.filter(subGroupData => subGroupData.name.includes(this.selectedSubGroup.value!))[0]._id : ""
+
+    this._appraisalArticleService.getAllAppraisalsByUbication(subGroupSelected, ubicationSelected)
 
   }
 

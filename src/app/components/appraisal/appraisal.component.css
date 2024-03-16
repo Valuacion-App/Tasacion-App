@@ -29,12 +29,17 @@ mat-header-cell {
   display: grid;
   align-items: center;
   justify-content: space-evenly;
-  grid-auto-rows: 40px;
+  grid-auto-rows: 70px;
   grid-template-columns: 600px 200px 200px;
 }
 .pdf-button {
   grid-column: 3;
   grid-row: 1;
+}
+.inputDropdown {
+  width: 100%;
+  grid-column: 1;
+  grid-row: 2;
 }
 
 .filterUbication {
