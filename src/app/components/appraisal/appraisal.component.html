@@ -17,12 +17,17 @@
   [data] = "subGroupData"
   Label = "Sub Grupo"
   placeholder="Seleccione el sub grupo" class="inputDropdown"></app-autocomplete-filter>
+  <app-autocomplete-filter
+  [control]="selectedArticle"
+  [data] = "articleData"
+  Label = "Articulos"
+  placeholder="Seleccione el articulo" class="inputDropdown"></app-autocomplete-filter>
   <mat-checkbox class="checkbox"
   [checked]="filterState"
   (change)="filterByState($event.checked)">
   Filtrar articulos Basura y Descarte
 </mat-checkbox>
-  <button mat-raised-button color="primary" (click)="getAllAppraisalsByUbication()">Buscar
+  <button mat-raised-button class="search-button" color="primary" (click)="getAllAppraisalsByUbication()">Buscar
     ambiente</button>
   <button mat-raised-button class="pdf-button" color="warn" (click)="openPdfModal()" [disabled]="AppraisalSelected.selected.length === 0" >
     Descargar Pdf
@@ -72,27 +77,27 @@
     </ng-container>
     <ng-container matColumnDef="article">
       <mat-header-cell *matHeaderCellDef> Grupo </mat-header-cell>
-      <mat-cell *matCellDef="let element" data-label="Ubicación" class="mat-cell-responsive"> {{element.article?.name}}
+      <mat-cell *matCellDef="let element" data-label="article" class="mat-cell-responsive"> {{element.article?.name}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="subGroup">
       <mat-header-cell *matHeaderCellDef> Sub Grupo </mat-header-cell>
-      <mat-cell *matCellDef="let element" data-label="Ubicación" class="mat-cell-responsive"> {{element.subGroup?.name}}
+      <mat-cell *matCellDef="let element" data-label="subGroup" class="mat-cell-responsive"> {{element.subGroup?.name}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="detail">
       <mat-header-cell *matHeaderCellDef> Detalle </mat-header-cell>
-      <mat-cell *matCellDef="let element" data-label="Ubicación" class="mat-cell-responsive"> {{element.detail}}
+      <mat-cell *matCellDef="let element" data-label="detail" class="mat-cell-responsive"> {{element.detail}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="state">
       <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
-      <mat-cell *matCellDef="let element" data-label="Ubicación" class="mat-cell-responsive"> {{element.state?.name}}
+      <mat-cell *matCellDef="let element" data-label="state" class="mat-cell-responsive"> {{element.state?.name}}
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="price">
       <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>
-      <mat-cell *matCellDef="let element" data-label="Ubicación" class="mat-cell-responsive"> {{element.Va}} Bs.
+      <mat-cell *matCellDef="let element" data-label="price" class="mat-cell-responsive"> {{element.Va}} Bs.
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="actions">

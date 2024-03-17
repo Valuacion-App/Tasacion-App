@@ -32,19 +32,23 @@ mat-header-cell {
   grid-auto-rows: 70px;
   grid-template-columns: 600px 200px 200px;
 }
+.search-button {
+  grid-column: 2;
+  grid-row: 1;
+}
+
 .pdf-button {
   grid-column: 3;
   grid-row: 1;
 }
 .checkbox {
-  align-self: center;
+  justify-self: center;
   grid-column: 2;
   grid-row: 2;
 }
 .inputDropdown {
   width: 100%;
-  grid-column: 1;
-  grid-row: 2;
+  grid-column: 1 / 2;
 }
 
 .filterUbication {

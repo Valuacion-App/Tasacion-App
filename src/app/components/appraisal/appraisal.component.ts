@@ -26,6 +26,8 @@ import { DetailAppraisalModalComponent } from '../detail-appraisal-modal/detail-
 import { SubGroupService } from '../../services/sub-group.service';
 import { subGroup } from '../../interfaces/subgroup.interface';
 import { AutocompleteFilterComponent } from '../autocomplete-filter/autocomplete-filter.component';
+import { ArticleService } from '../../services/article.service';
+import { article } from '../../interfaces/article.interface';
 const columns = [
   { columnName: 'Codigo de Tasacion', columnTag: 'appraisalCode' },
   { columnName: 'Viñeta', columnTag: 'bullet' },
@@ -59,7 +61,9 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
   selectedCount: number = 0
   ubicationData: ubication[] = []
   subGroupData: subGroup[] = []
+  articleData: article[] = []
   selectedUbication = new FormControl('');
+  selectedArticle = new FormControl('');
   selectedSubGroup = new FormControl('');
   filterState: boolean = true;
   displayColumns: any[] = columns;
@@ -79,9 +83,10 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
 
   constructor(
     private _ubicationService: UbicationService,
-    public dialog: MatDialog,
-    public _appraisalArticleService: AppraisalArticleService,
-    private _subGroupService: SubGroupService) {
+    private dialog: MatDialog,
+    private _appraisalArticleService: AppraisalArticleService,
+    private _subGroupService: SubGroupService,
+    private _articleService: ArticleService) {
     this.getAllDatas()
   }
 
@@ -115,9 +120,11 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
     forkJoin(
       this._ubicationService.getAllUbications(),
       this._subGroupService.getAllSubGroups(),
-    ).subscribe(([ubications, subGroups]) => {
+      this._articleService.getAllArticles()
+    ).subscribe(([ubications, subGroups, article]) => {
       this.ubicationData = ubications;
       this.subGroupData = subGroups;
+      this.articleData = article;
   })
 }
   getAllSubgroups() {
@@ -133,7 +140,6 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
     if(filter) {
       this.getAllAppraisalsByUbication()
     } else {
-      console.log('entro');
       this.filterStateText = 'false'
       this.getAllAppraisalsByUbication()
     }
