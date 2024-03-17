@@ -12,21 +12,30 @@
     </mat-form-field>
 
   </form>
-  <app-autocomplete-filter
-  [control]="selectedSubGroup"
-  [data] = "subGroupData"
-  Label = "Sub Grupo"
-  placeholder="Seleccione el sub grupo" class="inputDropdown"></app-autocomplete-filter>
-  <app-autocomplete-filter
-  [control]="selectedArticle"
-  [data] = "articleData"
-  Label = "Articulos"
-  placeholder="Seleccione el articulo" class="inputDropdown"></app-autocomplete-filter>
+  <div class="filter-second-row ">
+    <app-autocomplete-filter
+    [control]="selectedSubGroup"
+    [data] = "subGroupData"
+    Label = "Sub Grupo"
+    placeholder="Seleccione el sub grupo" class="inputArticleSubGroup"></app-autocomplete-filter>
+    <app-autocomplete-filter
+    [control]="selectedArticle"
+    [data] = "articleData"
+    Label = "Articulos"
+    placeholder="Seleccione el articulo" class="inputArticle"></app-autocomplete-filter>
+  </div>
   <mat-checkbox class="checkbox"
   [checked]="filterState"
   (change)="filterByState($event.checked)">
-  Filtrar articulos Basura y Descarte
+  <div class="textCheckbox">
+  @if (filterState) {
+    Articulos en Buen Estado
+  } @else {
+    Solo Descarte y Basura
+  }
+</div>
 </mat-checkbox>
+
   <button mat-raised-button class="search-button" color="primary" (click)="getAllAppraisalsByUbication()">Buscar
     ambiente</button>
   <button mat-raised-button class="pdf-button" color="warn" (click)="openPdfModal()" [disabled]="AppraisalSelected.selected.length === 0" >
@@ -97,7 +106,8 @@
     </ng-container>
     <ng-container matColumnDef="price">
       <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>
-      <mat-cell *matCellDef="let element" data-label="price" class="mat-cell-responsive"> {{element.Va}} Bs.
+      <mat-cell *matCellDef="let element" data-label="price" class="mat-cell-responsive">
+        {{element.useFormule ? element.Va : element.replacementValue }} Bs.
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="actions">

@@ -70,8 +70,12 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
   displayedColumns: string[] = [
     'select',
     'appraisalCode',
-    'bullet',
     'ubication',
+    'article',
+    'subGroup',
+    'detail',
+    'state',
+    'price'
   ];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'actions']
   columnsToDisplay: any[] = this.displayedColumns.slice();
@@ -136,8 +140,8 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
   filterByState(filter: boolean) {
     this.filterState = filter
 
-
     if(filter) {
+      this.filterStateText = 'true'
       this.getAllAppraisalsByUbication()
     } else {
       this.filterStateText = 'false'
@@ -215,8 +219,9 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
 
     const ubicationSelected = this.selectedUbication.value != "" ? this.ubicationData.filter(ubicationData => ubicationData.name.includes(this.selectedUbication.value!))[0]._id : ""
     const subGroupSelected = this.selectedSubGroup.value != "" ? this.subGroupData.filter(subGroupData => subGroupData.name.includes(this.selectedSubGroup.value!))[0]._id : ""
+    const articleSelected = this.selectedArticle.value != "" ? this.articleData.filter(articleData => articleData.name.includes(this.selectedArticle.value!))[0]._id : ""
 
-    this._appraisalArticleService.getAllAppraisalsQueryParams(subGroupSelected, ubicationSelected, this.filterStateText)
+    this._appraisalArticleService.getAllAppraisalsQueryParams(subGroupSelected, ubicationSelected, articleSelected, this.filterStateText)
 
   }
 
