@@ -1,6 +1,7 @@
 table {
   margin-top: 10px;
   width: 100%;
+  table-layout: fixed;
 }
 
 .mat-mdc-form-field {
@@ -8,9 +9,14 @@ table {
   width: 100%;
 }
 
-/* td, th {
-  width: 25%;
-} */
+
+
+th, td {
+  overflow: hidden;
+  width:auto;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 mat-header-cell {
   justify-content: center;
 }
@@ -29,12 +35,44 @@ mat-header-cell {
   display: grid;
   align-items: center;
   justify-content: space-evenly;
-  grid-auto-rows: 40px;
+  grid-auto-rows: 70px;
   grid-template-columns: 600px 200px 200px;
 }
+.filter-second-row {
+  display: grid;
+  align-items: center;
+  justify-content: space-evenly;
+  grid-auto-rows: 70px;
+  grid-template-columns: 300px 300px;
+}
+.search-button {
+  grid-column: 2;
+  grid-row: 1;
+}
+
 .pdf-button {
   grid-column: 3;
   grid-row: 1;
+}
+.checkbox {
+  justify-self: center;
+  grid-column: 2;
+  grid-row: 2;
+}
+.textCheckbox {
+  font-size: small;
+}
+.inputDropdown {
+  width: 100%;
+  grid-column: 1 / 2;
+}
+.inputArticleSubGroup {
+  width: 90%;
+  grid-column: 1 / 2;
+}
+.inputArticle{
+  width: 100%;
+  grid-column: 2 / 3;
 }
 
 .filterUbication {

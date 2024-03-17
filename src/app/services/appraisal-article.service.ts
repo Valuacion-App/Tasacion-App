@@ -21,12 +21,14 @@ export class AppraisalArticleService {
     })
   }
 
-  getAllAppraisalsByUbication(ubicationId: string) {
-    const options = ubicationId ?
-    { params: new HttpParams().set('ubicationId', ubicationId) } : {};
-    this.http.get<appraisalArticle[]>(`${this.myAppUrl}/appraisalArticles/search`, options).subscribe((data: appraisalArticle[]) => {
+  getAllAppraisalsQueryParams(subgroupId: string,ubicationId: string, articleId: string,important: string) {
+
+    const options = ubicationId || subgroupId || articleId ?
+    { params: {ubicationId, articleId, subgroupId, important } } : { params: new HttpParams().set('important', important)};
+    this.http.get<appraisalArticle[]>(`${this.myAppUrl}/appraisalArticles/filter`, options).subscribe((data: appraisalArticle[]) => {
       this.appraisalArticleData.next(data)
     })
+
   }
   deleteAppraisalsData() {
     this.appraisalArticleData.next([])
