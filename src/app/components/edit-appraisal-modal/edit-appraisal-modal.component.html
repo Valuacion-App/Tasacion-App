@@ -3,7 +3,7 @@
     <h1 mat-dialog-title>Editar Articulo</h1>
     <section class="example-section" mat-dialog-title>
       <mat-slide-toggle formControlName="useFormule">
-        @if (!AppraisalArticleData.value.useFormule) {
+        @if (AppraisalArticleData.value.useFormule) {
           Con Formula
         } @else {
           Sin Formula
@@ -60,7 +60,7 @@
       <mat-label>descripcion</mat-label>
       <textarea matInput rows="6" formControlName="description"> </textarea>
     </mat-form-field>
-    @if(!AppraisalArticleData.value.useFormule) {
+    @if(AppraisalArticleData.value.useFormule) {
     <mat-form-field class="inputSmall" appearance="outline">
       <mat-label>Vre</mat-label>
       <input type="number" matInput formControlName="vre" (change)="calcVr()">

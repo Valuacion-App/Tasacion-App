@@ -57,3 +57,4 @@ export interface updateAppraisal {
   isPC : boolean,
   useFormule : boolean
 }
+
