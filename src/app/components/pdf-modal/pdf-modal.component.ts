@@ -1,3 +1,4 @@
+import { map } from 'rxjs';
 import { PdfService } from './../../services/pdf-service.service';
 import { AfterViewInit, Component, Inject, ViewChild } from '@angular/core';
 import {
@@ -46,7 +47,7 @@ export class PdfModalComponent implements AfterViewInit {
 
     var PDF_link = document.createElement('a');
     PDF_link.href = pdfUrl;
-  //   TO DOWNLOAD PDF TO YOUR COMPUTER
+
     PDF_link.download = "Ficha_Tecnica.pdf";
     PDF_link.click();
     })

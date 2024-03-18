@@ -53,19 +53,19 @@
                 <!--   <b>Valor de Reposición o de mercado</b> -->
                 <div>
                     <div class="inputHorizontal">
-                        <b>Vre</b>
+                        <b>Precio de mercado</b>
                         <p>: {{detailData.vre}}</p>
                     </div>
                     <div class="inputHorizontal">
-                        <b>Vr</b>
+                        <b>Porcentaje de mercado</b>
                         <p>: {{detailData.vr}}</p>
                     </div>
                     <div class="inputHorizontal">
-                        <b>Ant</b>
+                        <b>años de antiguedad</b>
                         <p>: {{detailData.ant}}</p>
                     </div>
                     <div class="inputHorizontal">
-                        <b>Vexp</b>
+                        <b>tiempo de vida</b>
                         <p>: {{detailData.vexp}}</p>
                     </div>
                 </div>
@@ -83,12 +83,12 @@
 
                     @if(detailData.useFormule === true)
                     {(<div class="inputHorizontal">
-                        <b>Va</b>
+                        <b>Valor de formula</b>
                         <p>: {{detailData.Va}}</p>
                     </div>)}
                     @else if(detailData.useFormule === false) {
                     <div class="inputHorizontal">
-                        <b>replacementValue</b>
+                        <b>Valor de reposicion</b>
                         <p>: {{detailData.replacementValue}}</p>
                     </div>
                     }

@@ -11,7 +11,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { UbicationService } from '../../services/ubication.service';
 import { ubication } from '../../interfaces/ubication.interface';
 import { MatSelectModule } from '@angular/material/select';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, DecimalPipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { EditAppraisalModalComponent } from '../edit-appraisal-modal/edit-appraisal-modal.component';
 import { CommonModule } from '@angular/common';
@@ -48,6 +48,7 @@ const columns = [
     FormsModule, MatFormFieldModule,
     ReactiveFormsModule,
     CommonModule,
+    DecimalPipe,
     MatAutocompleteModule,
     AsyncPipe,
     MatCheckboxModule,

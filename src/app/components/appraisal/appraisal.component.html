@@ -107,7 +107,7 @@
     <ng-container matColumnDef="price">
       <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>
       <mat-cell *matCellDef="let element" data-label="price" class="mat-cell-responsive">
-        {{element.useFormule ? element.Va : element.replacementValue }} Bs.
+        {{element.useFormule ? element.Va : element.replacementValue | number : '1.1-2' }} Bs.
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="actions">
