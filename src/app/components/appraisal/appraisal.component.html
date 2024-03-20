@@ -43,7 +43,7 @@
   </button>
 </div>
 @if (AppraisalSelected.selected.length > 0) {
-<div style="color: grey;">Seleccionados: {{AppraisalSelected.selected.length }} / 30</div>
+<div style="color: grey;">Seleccionados: {{AppraisalSelected.selected.length }} / 99</div>
 }
 
 
@@ -60,7 +60,7 @@
       <mat-cell *matCellDef="let row" data-label="Seleccionar" class="mat-cell-responsive">
         <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? AppraisalSelected.toggle(row) : null"
           [checked]="AppraisalSelected.isSelected(row)"
-          [disabled]="AppraisalSelected.selected.length === 30 && !AppraisalSelected.isSelected(row)">
+          [disabled]="AppraisalSelected.selected.length === 99 && !AppraisalSelected.isSelected(row)">
         </mat-checkbox>
       </mat-cell>
     </ng-container>
@@ -107,7 +107,7 @@
     <ng-container matColumnDef="price">
       <mat-header-cell *matHeaderCellDef> Precio </mat-header-cell>
       <mat-cell *matCellDef="let element" data-label="price" class="mat-cell-responsive">
-        {{element.useFormule ? element.Va : element.replacementValue | number : '1.1-2' }} Bs.
+        {{(element.useFormule ? element.Va : element.replacementValue  ) | number : '1.1-2'}} Bs.
       </mat-cell>
     </ng-container>
     <ng-container matColumnDef="actions">
@@ -146,6 +146,6 @@
       </td>
     </tr>
   </table>
-  <mat-paginator [hidden]="!dataTasation.filteredData.length" [pageSizeOptions]="[30, 50, 100]"
+  <mat-paginator [hidden]="!dataTasation.filteredData.length" [pageSizeOptions]="[99, 200]"
     aria-label="Select page of appraisal"></mat-paginator>
 </div>

@@ -187,7 +187,7 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
     let pageIndex: number
     const numSelected = this.AppraisalSelected.selected.length;
     pageIndex = this.dataTasation.paginator?.pageIndex! * this.dataTasation.paginator?.pageSize!
-    return numSelected === 30 || this.dataTasation.data.at(-1)?._id === this.AppraisalSelected.selected.at(-1)?._id;
+    return numSelected === 99 || this.dataTasation.data.at(-1)?._id === this.AppraisalSelected.selected.at(-1)?._id;
   }
   masterToggle() {
     this.ischeckboxFullLength() ?
@@ -197,13 +197,13 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
     let pageIndex: number
     let lastIndex: number
     pageIndex = this.dataTasation.paginator?.pageIndex! * this.dataTasation.paginator?.pageSize!
-    if ((pageIndex + 30) > this.dataTasation.data.length) {
+    if ((pageIndex + 99) > this.dataTasation.data.length) {
       lastIndex = (this.dataTasation.data.length)
     } else {
-      lastIndex = pageIndex + 30
+      lastIndex = pageIndex + 99
     }
     for (let index = pageIndex; index < lastIndex; index++) {
-      if (this.AppraisalSelected.selected.length < 30) {
+      if (this.AppraisalSelected.selected.length < 99) {
         this.AppraisalSelected.select(this.dataTasation.data[index])
       }
     }
