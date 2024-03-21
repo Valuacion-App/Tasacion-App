@@ -24,17 +24,25 @@
     Label = "Articulos"
     placeholder="Seleccione el articulo" class="inputArticle"></app-autocomplete-filter>
   </div>
-  <mat-checkbox class="checkbox"
-  [checked]="filterState"
+  <mat-radio-group aria-label="Select an option" [(ngModel)]="filterSelected">
+    <mat-radio-button value="Sin filtro">Sin filtro</mat-radio-button>
+    <mat-radio-button value="Descarte">Descarte</mat-radio-button>
+    <mat-radio-button value="Basura">Basura</mat-radio-button>
+  </mat-radio-group>
+  <!-- <mat-checkbox class="checkbox"
+  [checked]="filterDiscard"
   (change)="filterByState($event.checked)">
   <div class="textCheckbox">
-  @if (filterState) {
-    Articulos en Buen Estado
-  } @else {
-    Solo Descarte y Basura
-  }
+    Solo Descarte
 </div>
 </mat-checkbox>
+<mat-checkbox class="checkbox"
+[checked]="filterTrash"
+(change)="filterByState($event.checked)">
+<div class="textCheckbox">
+  Solo Basura
+</div>
+</mat-checkbox> -->
 
   <button mat-raised-button class="search-button" color="primary" (click)="getAllAppraisalsByUbication()">Buscar
     ambiente</button>

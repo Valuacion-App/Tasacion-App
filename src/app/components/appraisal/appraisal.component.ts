@@ -27,6 +27,7 @@ import { SubGroupService } from '../../services/sub-group.service';
 import { subGroup } from '../../interfaces/subgroup.interface';
 import { AutocompleteFilterComponent } from '../autocomplete-filter/autocomplete-filter.component';
 import { ArticleService } from '../../services/article.service';
+import {MatRadioModule} from '@angular/material/radio';
 import { article } from '../../interfaces/article.interface';
 const columns = [
   { columnName: 'Codigo de Tasacion', columnTag: 'appraisalCode' },
@@ -44,6 +45,7 @@ const columns = [
     MatPaginatorModule,
     MatButtonModule,
     MatMenuModule,
+    MatRadioModule,
     MatSelectModule,
     FormsModule, MatFormFieldModule,
     ReactiveFormsModule,
@@ -66,8 +68,10 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
   selectedUbication = new FormControl('');
   selectedArticle = new FormControl('');
   selectedSubGroup = new FormControl('');
-  filterState: boolean = true;
+  filterDiscard: boolean = false;
+  filterTrash: boolean = false;
   displayColumns: any[] = columns;
+  filterSelected: string = "Sin filtro";
   displayedColumns: string[] = [
     'select',
     'appraisalCode',
@@ -139,7 +143,7 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
   }
 
   filterByState(filter: boolean) {
-    this.filterState = filter
+    this.filterDiscard = filter
 
     if(filter) {
       this.filterStateText = 'true'
@@ -222,8 +226,18 @@ export class AppraisalComponent implements AfterViewInit, OnInit, OnDestroy {
     const subGroupSelected = this.selectedSubGroup.value != "" ? this.subGroupData.filter(subGroupData => subGroupData.name.includes(this.selectedSubGroup.value!))[0]._id : ""
     const articleSelected = this.selectedArticle.value != "" ? this.articleData.filter(articleData => articleData.name.includes(this.selectedArticle.value!))[0]._id : ""
 
-    this._appraisalArticleService.getAllAppraisalsQueryParams(subGroupSelected, ubicationSelected, articleSelected, this.filterStateText)
-
+    if (this.filterSelected === "Basura") {
+      console.log(this.filterSelected);
+      this._appraisalArticleService.getAllAppraisalsQueryParams(subGroupSelected, ubicationSelected, articleSelected, "true", "false")
+    } else {
+      if (this.filterSelected == "Descarte") {
+        console.log(this.filterSelected);
+        this._appraisalArticleService.getAllAppraisalsQueryParams(subGroupSelected, ubicationSelected, articleSelected, "false", "true")
+      } else {
+        console.log(this.filterSelected);
+        this._appraisalArticleService.getAllAppraisalsQueryParams(subGroupSelected, ubicationSelected, articleSelected, "false", "false")
+      }
+    }
   }
 
 }
