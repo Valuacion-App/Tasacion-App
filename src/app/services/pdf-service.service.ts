@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../environments/environments';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { appraisalArticle } from '../interfaces/appraisal.interface';
 import { Observable } from 'rxjs';
 
@@ -17,5 +17,10 @@ export class PdfService {
   createPdf(appraisals: appraisalArticle[]): Observable<any> {
 
     return this.http.post(`${this.myAppUrl}/generate-pdf`, appraisals, { responseType:'blob'})
+  }
+
+  createPdfTwoItems(appraisals: appraisalArticle[]): Observable<any> {
+
+    return this.http.post(`${this.myAppUrl}/generate-pdf`, appraisals, { params: new HttpParams().set('isTwoData', "true"), responseType:'blob' })
   }
 }

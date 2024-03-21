@@ -52,4 +52,16 @@ export class PdfModalComponent implements AfterViewInit {
     PDF_link.click();
     })
   }
+  createPdfTwoItems() {
+    this.pdfService.createPdfTwoItems(this.data.appraisals).subscribe(res => {
+      let blob = new Blob([res], { type: 'application/pdf' });
+    let pdfUrl = window.URL.createObjectURL(blob);
+
+    var PDF_link = document.createElement('a');
+    PDF_link.href = pdfUrl;
+
+    PDF_link.download = "Ficha_Tecnica.pdf";
+    PDF_link.click();
+    })
+  }
 }
